@@ -282,7 +282,6 @@ function animate() {
     if (samuraiModel) {
       samuraiModel.rotation.y = (elapsedTime * 0.15) + (mouse.x * 0.25);
       samuraiModel.rotation.x = mouse.y * 0.15;
-      samuraiModel.rotation.z = 0;
     }
     
     samuraiRenderer.render(samuraiScene, samuraiCamera);
