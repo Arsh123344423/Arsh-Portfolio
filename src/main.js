@@ -294,33 +294,12 @@ function animate() {
 // ==========================================================================
 // GSAP SCROLLTRIGGER ARCHITECTURE
 // ==========================================================================
+// AFTER
 function setupGSAPAnimations() {
   if (!isSamuraiLoaded || isGSAPInitialized) return;
   isGSAPInitialized = true;
-  
-  // Timeline 1: Zoom in as user scrolls to About section
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '#about',
-      start: 'top bottom',
-      end: 'top top',
-      scrub: 1,
-    }
-  })
-  .to(samuraiCamera.position, { z: 2.2, y: 0.1 })
-  .to(samuraiModel.position, { y: 0.15 });
 
-  // Timeline 2: Pull back camera as content sections scroll in
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '#skills',
-      start: 'top bottom',
-      end: 'top center',
-      scrub: 1,
-    }
-  })
-  .to(samuraiCamera.position, { z: 3.5, y: 0.2 })
-  .to(samuraiModel.rotation, { y: Math.PI * 0.15 });
+  // NO camera scroll tweens — model stays locked in place
 
   // Animate skills cards entering sequentially
   gsap.from('.skill-card', {
@@ -363,7 +342,6 @@ function setupGSAPAnimations() {
     ease: "power2.out"
   });
 }
-
 // ==========================================================================
 // INTERACTIVE CLICK EVENT: ENTER PORTFOLIO
 // ==========================================================================
