@@ -279,9 +279,12 @@ function animate() {
       samuraiParticles.rotation.x = elapsedTime * 0.01;
     }
     
+    // AFTER
     if (samuraiModel) {
-      samuraiModel.rotation.y = (elapsedTime * 0.15) + (mouse.x * 0.25);
-      samuraiModel.rotation.x = mouse.y * 0.15;
+      // Body stays still — only subtle idle sway
+      samuraiModel.rotation.y += (mouse.x * 0.08 - samuraiModel.rotation.y) * 0.04;
+      samuraiModel.rotation.x += (mouse.y * 0.06 - samuraiModel.rotation.x) * 0.04;
+      samuraiModel.rotation.z = 0;
     }
     
     samuraiRenderer.render(samuraiScene, samuraiCamera);
@@ -364,21 +367,31 @@ function setupGSAPAnimations() {
 // ==========================================================================
 // INTERACTIVE CLICK EVENT: ENTER PORTFOLIO
 // ==========================================================================
+// AFTER
 function enterPortfolio() {
   isInterfaceEntered = true;
-  
-  // Synthesize background audio core
   initSynth();
   toggleMute();
-  
-  // Fade out loader
+
   loaderContainer.style.opacity = 0;
-  setTimeout(() => {
-    loaderContainer.style.visibility = 'hidden';
-  }, 800);
-  
-  // Unlock scrolling on body
+  setTimeout(() => { loaderContainer.style.visibility = 'hidden'; }, 800);
   document.body.classList.remove('locked');
+
+  // Entry zoom: push camera in slightly, then pull back to rest
+  if (samuraiCamera) {
+    const startZ = samuraiCamera.position.z;
+    gsap.timeline()
+      .to(samuraiCamera.position, {
+        z: startZ - 0.6,   // zoom in
+        duration: 0.9,
+        ease: 'power2.out'
+      })
+      .to(samuraiCamera.position, {
+        z: startZ,          // settle back
+        duration: 1.1,
+        ease: 'power2.inOut'
+      });
+  }
 }
 
 enterBtn.addEventListener('click', () => {
