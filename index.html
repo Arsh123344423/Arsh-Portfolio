@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEO-ZEN // Interactive 3D Portfolio</title>
+  <meta name="description" content="A premium 3D creative developer portfolio featuring an interactive cyber-samurai experience built with Three.js and GSAP.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body class="locked">
+
+  <!-- Immersive Landing Page / Loader Overlay -->
+  <div id="loader-container">
+    <div class="landing-content">
+      <div class="landing-tag">// SYSTEM ACCESS //</div>
+      <h1 class="landing-title glitch" data-text="NEO-ZEN">NEO-ZEN</h1>
+      <p class="landing-subtitle">AN INTERACTIVE 3D DIGITAL DIMENSION</p>
+      
+      <div class="landing-action">
+        <button id="enter-btn" class="ready">UNLOCK THE REALITY</button>
+        <div class="loader-subtext" id="loader-subtext">CLICK TO UNLEASH THE SENSES</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ambient Audio Toggle -->
+  <div class="audio-control" id="audio-toggle">
+    <svg class="audio-icon playing" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+    </svg>
+    <svg class="audio-icon muted hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+      <line x1="23" y1="9" x2="17" y2="15"></line>
+      <line x1="17" y1="9" x2="23" y2="15"></line>
+    </svg>
+  </div>
+
+  <!-- FIXED BACKGROUND VIEWPORT -->
+  <div id="samurai-viewport" class="viewport-layer">
+    <canvas id="samurai-canvas"></canvas>
+
+    <!-- Cyber HUD UI Overlays -->
+    <div class="cyber-hud-top">
+      <div class="hud-left">
+        <span class="hud-tag">ID: RONIN-01</span>
+        <span class="hud-latency">LATENCY: 12MS</span>
+      </div>
+      <div class="hud-right">
+        <span class="hud-status-ready">SYS ONLINE</span>
+      </div>
+    </div>
+
+    <div class="cyber-hud-decor border-left"></div>
+    <div class="cyber-hud-decor border-right"></div>
+  </div>
+
+  <!-- SINGLE LINEAR SCROLLABLE LAYER -->
+  <div id="scroll-container">
+    
+    <!-- HERO SECTION -->
+    <section class="section hero-section" id="hero">
+      <div class="content-wrapper">
+        <div class="hud-badge">// PROJECT NEO-ZEN</div>
+        <h1 class="glitch" data-text="CYBER SAMURAI">CYBER SAMURAI</h1>
+        <p class="lead-text">Blending cybernetic code with ancient digital craftsmanship. I design, build, and deploy immersive web dimensions.</p>
+        <div class="cta-scroll-indicator">
+          <span class="scroll-arrow"></span>
+          <span class="scroll-text">SCROLL TO EXPLORE</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="section about-section" id="about">
+      <div class="content-wrapper glass-panel">
+        <div class="panel-header">
+          <span class="panel-dot"></span>
+          <span class="panel-title">SYSTEM FILE: AGENT.LOG</span>
+        </div>
+        <h2>THE RONIN</h2>
+        <p>I am a creative full-stack developer specializing in bringing complex 3D graphics, interactive frontends, and robust backend logic together in the browser.</p>
+        <p>My philosophy is like the bushido code of the digital age: precision, mastery of tools, and an unwavering commitment to aesthetics and speed.</p>
+        <div class="system-stats">
+          <div class="stat-box">
+            <span class="stat-num">08+</span>
+            <span class="stat-lbl">Years Code</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">50+</span>
+            <span class="stat-lbl">Systems Shipped</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">100%</span>
+            <span class="stat-lbl">Aesthetic Rating</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section class="section skills-section" id="skills">
+      <div class="content-wrapper">
+        <h2 class="section-title text-center">MASTERY &amp; TOOLS</h2>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+              </svg>
+            </div>
+            <h3>3D Graphics / WebGL</h3>
+            <p>Highly skilled in Three.js, shaders (GLSL), canvas optimizations, model rigging, and lighting architecture for real-time 60fps web experiences.</p>
+            <div class="tags"><span class="tag">Three.js</span><span class="tag">WebGL</span><span class="tag">GLSL</span><span class="tag">Blender</span></div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                <polygon points="12 2 2 22 22 22"></polygon>
+              </svg>
+            </div>
+            <h3>Creative Frontend</h3>
+            <p>Crafting responsive, beautiful interactive UI modules using Vanilla CSS/JS, GSAP animations, canvas physics, and modern micro-frontends.</p>
+            <div class="tags"><span class="tag">GSAP</span><span class="tag">Vite</span><span class="tag">ES6+</span><span class="tag">CSS Grid</span></div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>
+            </div>
+            <h3>Backend Systems</h3>
+            <p>Building high-speed Node.js servers, designing relational databases, integrating custom WebSockets for real-time multiplayer applications.</p>
+            <div class="tags"><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">PostgreSQL</span><span class="tag">WebSockets</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section class="section projects-section" id="projects">
+      <div class="content-wrapper-wide">
+        <h2 class="section-title text-center">THE PROJECTS</h2>
+        <div class="project-slider">
+          
+          <div class="project-card">
+            <div class="project-image-placeholder red-glow">
+              <div class="project-num">01</div>
+            </div>
+            <div class="project-info">
+              <h3>PROJECT CHRONOS</h3>
+              <p>An interactive temporal database visualizer featuring custom GPU particle streams and spatial sorting layouts.</p>
+              <div class="project-links">
+                <a href="#" class="btn-link">SYSTEM INFO</a>
+                <a href="#" class="btn-link secondary">LAUNCH</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image-placeholder blue-glow">
+              <div class="project-num">02</div>
+            </div>
+            <div class="project-info">
+              <h3>VIRTUAL GRID</h3>
+              <p>A multiplayer Three.js simulation where users construct customized cyber rooms using pre-loaded GLTF assets.</p>
+              <div class="project-links">
+                <a href="#" class="btn-link">SYSTEM INFO</a>
+                <a href="#" class="btn-link secondary">LAUNCH</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image-placeholder red-glow">
+              <div class="project-num">03</div>
+            </div>
+            <div class="project-info">
+              <h3>NEURAL SLICE</h3>
+              <p>A WebGL cutting mechanics prototype utilizing real-time mesh CSG clipping and shader sparks.</p>
+              <div class="project-links">
+                <a href="#" class="btn-link">SYSTEM INFO</a>
+                <a href="#" class="btn-link secondary">LAUNCH</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="section contact-section" id="contact">
+      <div class="content-wrapper glass-panel">
+        <div class="panel-header">
+          <span class="panel-dot"></span>
+          <span class="panel-title">ESTABLISH PORTAL LINK</span>
+        </div>
+        <h2>NEXUS CONNECT</h2>
+        <p>Ready to build the next dimension? Send a neural signal to establish contact. I am currently open for full-time contracts, creative collaborations, and high-impact web design projects.</p>
+        
+        <form class="contact-form" id="contact-form" onsubmit="event.preventDefault(); alert('Signal Transmitted.');">
+          <div class="form-group">
+            <label for="name">CODENAME / NAME</label>
+            <input type="text" id="name" required placeholder="e.g. Ronin 08">
+          </div>
+          <div class="form-group">
+            <label for="email">SIGNAL ADDR / EMAIL</label>
+            <input type="email" id="email" required placeholder="e.g. cyber@domain.com">
+          </div>
+          <div class="form-group">
+            <label for="message">TRANSMISSION DATA / MESSAGE</label>
+            <textarea id="message" rows="4" required placeholder="What are we building..."></textarea>
+          </div>
+          <button type="submit" class="btn-cyber-submit">TRANSMIT NEURAL SIGNAL</button>
+        </form>
+      </div>
+    </section>
+
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
