@@ -49,52 +49,69 @@ export default function Loader() {
         }}
       />
 
-      {/* Apple-style content container */}
+      {/* Premium Apple-style content */}
       <div className={`relative z-10 text-center flex flex-col items-center justify-center px-4 sm:px-6 md:px-12 w-full pointer-events-auto transition-all duration-1000 ${
         mounted ? 'opacity-100' : 'opacity-0'
       } ${isLoading ? 'opacity-0 scale-95' : ''}`}>
         
-        {/* Main hero heading - bold Apple style */}
-        <h1 className="relative mb-6 sm:mb-8 md:mb-12 opacity-0 animate-fade-in max-w-6xl" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
-          <span className="block text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight leading-[1.1] text-white">
-            Creative Developer
+        {/* Premium headline with enhanced visual weight */}
+        <h1 className="relative mb-8 sm:mb-10 md:mb-12 opacity-0 animate-fade-in max-w-7xl" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
+          <span className="block text-6xl sm:text-7xl md:text-8xl lg:text-[120px] font-black tracking-tighter leading-[0.95] text-white">
+            Creative
+          </span>
+          <span className="block text-6xl sm:text-7xl md:text-8xl lg:text-[120px] font-black tracking-tighter leading-[0.95] text-white">
+            Developer
           </span>
         </h1>
 
-        {/* Subtitle - clean and minimal */}
-        <div className="max-w-3xl mb-16 sm:mb-20 md:mb-24 opacity-0 animate-fade-in" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
-          <p className="text-base sm:text-lg md:text-xl text-gray-400 leading-relaxed font-light">
-            Building immersive digital experiences with precision and innovation.
+        {/* Premium subtitle with enhanced messaging */}
+        <div className="max-w-2xl mb-10 sm:mb-12 md:mb-14 opacity-0 animate-fade-in" style={{ animationDelay: '0.35s', animationFillMode: 'forwards' }}>
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 leading-relaxed font-light tracking-wide">
+            Designing and building digital experiences that inspire
           </p>
         </div>
 
-        {/* Apple-style button with understated design */}
+        {/* Secondary tagline */}
+        <div className="mb-16 sm:mb-18 md:mb-20 opacity-0 animate-fade-in max-w-xl" style={{ animationDelay: '0.50s', animationFillMode: 'forwards' }}>
+          <p className="text-sm sm:text-base text-gray-500 font-light tracking-wide">
+            Full-stack development meets creative innovation
+          </p>
+        </div>
+
+        {/* Premium CTA button with enhanced styling */}
         <button
           onClick={handleClick}
           disabled={isLoading}
-          className={`opacity-0 animate-fade-in group relative px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base md:text-lg font-normal transition-all duration-700 text-white ${
+          className={`opacity-0 animate-fade-in group relative px-7 sm:px-9 md:px-11 py-3 sm:py-3.5 md:py-4 text-sm sm:text-base font-medium transition-all duration-700 text-white border border-white/40 rounded-full ${
             isLoading
               ? 'opacity-50 cursor-not-allowed'
-              : 'hover:text-gray-300'
+              : 'hover:border-white/100 hover:bg-white/5 hover:shadow-lg hover:shadow-white/10 active:scale-95'
           }`}
-          style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
+          style={{ animationDelay: '0.65s', animationFillMode: 'forwards' }}
         >
-          <span className="relative z-10 flex items-center justify-center gap-2">
-            {isLoading ? (
-              <>
-                <span className="inline-block w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
-              </>
-            ) : (
-              <>
-                Explore My Work
-                <span className="transition-transform group-hover:translate-x-1 duration-300">→</span>
-              </>
-            )}
-          </span>
+          {isLoading ? (
+            <span className="flex items-center justify-center gap-2">
+              <span className="inline-block w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+            </span>
+          ) : (
+            <span className="flex items-center justify-center gap-3 text-base">
+              View My Work
+              <span className="transition-all group-hover:translate-y-0.5 duration-300 text-white/60 group-hover:text-white/100">
+                ↓
+              </span>
+            </span>
+          )}
         </button>
 
-        {/* Minimal divider line */}
-        <div className="mt-16 sm:mt-20 md:mt-24 w-12 h-px bg-white/20 opacity-0 animate-fade-in" style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }} />
+        {/* Decorative scroll indicator */}
+        <div className="mt-24 sm:mt-28 md:mt-32 opacity-0 animate-fade-in pointer-events-none" style={{ animationDelay: '0.85s', animationFillMode: 'forwards' }}>
+          <div className="flex flex-col items-center gap-4">
+            <p className="text-xs text-gray-600 tracking-widest uppercase font-light">Scroll to explore</p>
+            <div className="w-6 h-10 border border-white/20 rounded-full flex items-center justify-center">
+              <div className="w-1 h-2 bg-white/40 rounded-full animate-pulse" />
+            </div>
+          </div>
+        </div>
       </div>
 
 
