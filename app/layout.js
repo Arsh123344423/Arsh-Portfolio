@@ -1,9 +1,9 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'NEO‑ZEN // Interactive 3D Portfolio',
+  title: 'Arsh | Creative Developer & Designer',
   description:
-    'A premium cyber-samurai 3D portfolio built with Three.js, GSAP, and Next.js.',
+    'Modern interactive portfolio showcasing full-stack development, creative coding, and immersive 3D experiences.',
 };
 
 import GlobalEffects from '@/components/GlobalEffects';

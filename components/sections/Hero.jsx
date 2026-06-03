@@ -1,26 +1,58 @@
 /**
- * Hero Section
+ * Hero Section — Modern minimalist design matching landing page
  */
 export default function Hero() {
   return (
-    <section className="cyber-section justify-start items-center md:pt-[90px] md:px-10 md:pb-10" id="hero">
-      <div className="w-full max-w-[620px] ml-0 mr-auto glass-panel p-9 md:p-12">
-        <h1 className="glitch text-[clamp(2.5rem,8vw,4.5rem)] font-black leading-[0.9] tracking-[-2px] mb-[25px] text-white drop-shadow-[0_0_20px_rgba(255,0,60,0.3)]" data-text="CYBER SAMURAI">
-          CYBER SAMURAI
+    <section className="w-full min-h-screen flex flex-col justify-center items-start px-4 sm:px-6 md:px-10 lg:px-16 py-16 sm:py-20 md:py-24 relative" id="hero">
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-transparent to-transparent" />
+      </div>
+
+      <div className="w-full max-w-3xl relative z-10">
+        {/* Decorative line */}
+        <div className="mb-6 sm:mb-8">
+          <div className="h-px w-12 bg-white/20" />
+        </div>
+
+        {/* Main heading */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-4 sm:mb-6 md:mb-8 text-white">
+          <span className="block">Creative Developer</span>
+          <span className="block text-2xl sm:text-3xl md:text-4xl font-light text-gray-400 mt-2 sm:mt-3">Building Digital Experiences</span>
         </h1>
-        <p className="text-[1.15rem] text-gray leading-[1.7] max-w-[540px] mb-8">
-          Blending cybernetic code with ancient digital craftsmanship. I design,
-          build, and deploy immersive web dimensions.
+
+        {/* Description */}
+        <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed mb-8 sm:mb-10 md:mb-12 max-w-2xl font-light">
+          I blend cutting-edge technology with thoughtful design to create immersive digital experiences that captivate, engage, and inspire.
         </p>
-        <div className="flex flex-wrap gap-2.5 mb-7">
-          <a href="#projects" className="font-mono text-[0.72rem] tracking-[2px] uppercase text-gray px-4 py-2 border border-cyber-red/25 rounded-[2px] transition-all duration-300 hover:text-white hover:border-cyber-red hover:bg-cyber-red/10 pointer-events-auto">Projects</a>
-          <a href="#skills" className="font-mono text-[0.72rem] tracking-[2px] uppercase text-gray px-4 py-2 border border-cyber-red/25 rounded-[2px] transition-all duration-300 hover:text-white hover:border-cyber-red hover:bg-cyber-red/10 pointer-events-auto">Tools</a>
-          <a href="#contact" className="font-mono text-[0.72rem] tracking-[2px] uppercase text-cyber-red px-4 py-2 border border-cyber-red bg-cyber-red/10 rounded-[2px] transition-all duration-300 hover:text-white hover:bg-cyber-red pointer-events-auto">Contact</a>
+
+        {/* Navigation buttons */}
+        <div className="flex flex-wrap gap-3 sm:gap-4 md:gap-5 mb-12 sm:mb-16">
+          <a href="#projects" className="px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 border border-white/30 text-white hover:border-white hover:bg-white/5 transition-all duration-300 text-xs sm:text-sm md:text-base font-light tracking-wide">
+            Work
+          </a>
+          <a href="#skills" className="px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 border border-white/30 text-white hover:border-white hover:bg-white/5 transition-all duration-300 text-xs sm:text-sm md:text-base font-light tracking-wide">
+            Skills
+          </a>
+          <a href="#contact" className="px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 border border-white bg-white text-black hover:bg-white/90 transition-all duration-300 text-xs sm:text-sm md:text-base font-light tracking-wide">
+            Get in Touch
+          </a>
         </div>
-        <div className="flex flex-col items-start mt-[50px] opacity-60 pointer-events-none">
-          <span className="block w-[10px] h-[10px] border-b-2 border-r-2 border-cyber-red rotate-45 mb-2.5 animate-bounce" />
-          <span className="font-mono text-[0.75rem] tracking-[3px] text-cyber-red">SCROLL TO EXPLORE</span>
+
+        {/* Scroll indicator */}
+        <div className="flex flex-col items-start gap-3 opacity-60 pointer-events-none">
+          <p className="text-xs sm:text-sm text-gray-500 tracking-widest uppercase font-light">Scroll to explore</p>
+          <div className="animate-bounce">
+            <svg className="w-4 h-6 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
         </div>
+      </div>
+
+      {/* Accent element */}
+      <div className="hidden sm:block absolute bottom-6 right-6 md:bottom-10 md:right-10 opacity-20">
+        <div className="w-32 h-32 border border-white rounded-full" />
       </div>
     </section>
   );
