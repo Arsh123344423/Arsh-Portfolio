@@ -39,6 +39,16 @@
   60%  { transform: translateY(-5px)  rotate(45deg); }
 }
 
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes glitch-anim-1 {
   0%   { clip: rect(20px,  9999px, 66px,  0); }
   100% { clip: rect(120px, 9999px, 140px, 0); }
@@ -84,6 +94,14 @@
 
 /* ── Custom Utilities ───────────────────────────────────────────────────────── */
 @layer utilities {
+  .animate-fade-in {
+    animation: fade-in 0.8s ease-out forwards;
+  }
+
+  .animate-slide-in-up {
+    animation: slide-in-up 0.8s ease-out forwards;
+  }
+
   .glitch { position: relative; }
   .glitch::before, .glitch::after {
     content: attr(data-text);
