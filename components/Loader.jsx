@@ -27,16 +27,13 @@ export default function Loader() {
   return (
     <div className="fixed inset-0 bg-transparent z-[10000] flex justify-center items-center pointer-events-auto overflow-hidden">
       
-      <div className="relative z-10 text-center flex flex-col items-center justify-center p-[22px] md:p-[45px] w-[90%] md:w-1/2 h-auto min-h-[300px] pointer-events-auto mx-auto bg-black/80 border border-cyber-red/30 backdrop-blur-sm">
+      <div className="relative z-10 text-center flex flex-col items-center justify-center p-[45px] md:p-[45px] w-[90%] md:w-1/2 h-auto min-h-[300px] pointer-events-auto mx-auto bg-black/80 border border-cyber-red/30 backdrop-blur-sm">
         <div className="font-mono text-[0.75rem] tracking-[5px] text-cyber-red mb-[0.9rem] animate-pulse">// SYSTEM ACCESS //</div>
-        <h1 className="glitch text-[clamp(3rem,7.5vw,4.5rem)] font-black tracking-[-2px] leading-[0.9] mb-[18px] text-white" data-text="NEO-ZEN">
+        <h1 className="glitch text-[clamp(6rem,7.5vw,4.5rem)] font-black tracking-[-2px] leading-[0.9] mb-[18px] text-white" data-text="NEO-ZEN">
           NEO-ZEN
         </h1>
         <p className="font-mono text-[0.9rem] text-cyber-blue tracking-[2px] mb-[0.9rem]">AN INTERACTIVE 3D DIGITAL DIMENSION</p>
-        <p className="text-[0.825rem] text-gray leading-[1.6] mb-[1.8rem]">
-          Immersive WebGL portfolio — scroll through projects, tools, and contact
-          after you enter the dimension.
-        </p>
+        
 
         <div className="flex flex-col items-center w-full mt-[0.9rem] pointer-events-auto">
           <button

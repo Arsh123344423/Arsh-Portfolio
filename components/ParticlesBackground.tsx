@@ -58,7 +58,7 @@ export default function ParticlesBackground({
     const positions = new Float32Array(PARTICLE_COUNT * 3);
     const colors    = new Float32Array(PARTICLE_COUNT * 3);
 
-    const colorA = new THREE.Color('#d6ccde'); // soft violet (matches GhostCursor)
+    const colorA = new THREE.Color('#6c7582'); // soft violet (matches GhostCursor)
     const colorB = new THREE.Color('#ff003c'); // cyber red
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {

@@ -36,7 +36,7 @@ export default function AudioControl() {
 
       {/* Muted icon */}
       <svg
-        className={`w-5 h-5${!muted ? ' hidden' : ''}`}
+        className={`w-5 h-5${muted ? '' : 'hidden'}`}
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
