@@ -34,7 +34,7 @@ export default function Scene3DBackground() {
     camera.position.set(0, 0, 50);
 
     // ── Particles ─────────────────────────────────────────────────────────────
-    const PARTICLE_COUNT = 3000;
+    const PARTICLE_COUNT = 750;
     const pGeo = new THREE.BufferGeometry();
     const pPos = new Float32Array(PARTICLE_COUNT * 3);
     const pCol = new Float32Array(PARTICLE_COUNT * 3);
@@ -114,8 +114,8 @@ export default function Scene3DBackground() {
       const t = clock.getElapsedTime();
 
       // Slow particle drift
-      particles.rotation.y = t * 0.015;
-      particles.rotation.x = t * 0.007;
+      particles.rotation.y = t * 0.008;
+      particles.rotation.x = t * 0.004;
 
       // Camera parallax (smooth follow)
       camera.position.x += (targetX - camera.position.x) * 0.04;

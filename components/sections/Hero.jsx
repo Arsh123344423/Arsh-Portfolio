@@ -1,25 +1,37 @@
 /**
- * Hero Section
+ * Hero Section — Ultra-modernistic and clean
  */
 export default function Hero() {
   return (
-    <section className="cyber-section justify-start items-center md:pt-[90px] md:px-10 md:pb-10" id="hero">
-      <div className="w-full max-w-[620px] ml-0 mr-auto glass-panel p-9 md:p-12">
-        <h1 className="glitch text-[clamp(2.5rem,8vw,4.5rem)] font-black leading-[0.9] tracking-[-2px] mb-[25px] text-white drop-shadow-[0_0_20px_rgba(255,0,60,0.3)]" data-text="CYBER SAMURAI">
-          CYBER SAMURAI
+    <section className="w-full min-h-screen flex flex-col justify-center items-start px-4 sm:px-6 md:px-10 lg:px-16 py-16 sm:py-20 md:py-24 relative" id="hero">
+      <div className="w-full max-w-4xl relative z-10">
+        {/* Main heading - bold and clear */}
+        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.05] mb-10 sm:mb-12 md:mb-14 text-white">
+          Creative Developer
         </h1>
-        <p className="text-[1.15rem] text-gray leading-[1.7] max-w-[540px] mb-8">
-          Blending cybernetic code with ancient digital craftsmanship. I design,
-          build, and deploy immersive web dimensions.
+
+        {/* Concise description */}
+        <p className="text-lg sm:text-xl md:text-2xl text-gray-300 leading-relaxed mb-14 sm:mb-16 md:mb-20 max-w-3xl font-light">
+          Building digital experiences with code and design.
         </p>
-        <div className="flex flex-wrap gap-2.5 mb-7">
-          <a href="#projects" className="font-mono text-[0.72rem] tracking-[2px] uppercase text-gray px-4 py-2 border border-cyber-red/25 rounded-[2px] transition-all duration-300 hover:text-white hover:border-cyber-red hover:bg-cyber-red/10 pointer-events-auto">Projects</a>
-          <a href="#skills" className="font-mono text-[0.72rem] tracking-[2px] uppercase text-gray px-4 py-2 border border-cyber-red/25 rounded-[2px] transition-all duration-300 hover:text-white hover:border-cyber-red hover:bg-cyber-red/10 pointer-events-auto">Tools</a>
-          <a href="#contact" className="font-mono text-[0.72rem] tracking-[2px] uppercase text-cyber-red px-4 py-2 border border-cyber-red bg-cyber-red/10 rounded-[2px] transition-all duration-300 hover:text-white hover:bg-cyber-red pointer-events-auto">Contact</a>
+
+        {/* Navigation buttons - minimal rounded style */}
+        <div className="flex flex-wrap gap-3 sm:gap-4 md:gap-5 mb-20">
+          <a href="#projects" className="px-6 sm:px-8 py-3 sm:py-3.5 border border-white text-white hover:bg-white hover:text-black transition-all duration-300 text-sm font-light rounded-full">
+            Work
+          </a>
+          <a href="#skills" className="px-6 sm:px-8 py-3 sm:py-3.5 border border-white text-white hover:bg-white hover:text-black transition-all duration-300 text-sm font-light rounded-full">
+            Skills
+          </a>
+          <a href="#contact" className="px-6 sm:px-8 py-3 sm:py-3.5 bg-white text-black hover:bg-gray-100 transition-all duration-300 text-sm font-light rounded-full">
+            Contact
+          </a>
         </div>
-        <div className="flex flex-col items-start mt-[50px] opacity-60 pointer-events-none">
-          <span className="block w-[10px] h-[10px] border-b-2 border-r-2 border-cyber-red rotate-45 mb-2.5 animate-bounce" />
-          <span className="font-mono text-[0.75rem] tracking-[3px] text-cyber-red">SCROLL TO EXPLORE</span>
+
+        {/* Minimal scroll indicator */}
+        <div className="flex items-center gap-2 opacity-60 pointer-events-none">
+          <p className="text-xs text-gray-500 font-light">Scroll</p>
+          <div className="w-3 h-3 border-b-2 border-r-2 border-gray-500 rotate-45 animate-bounce" />
         </div>
       </div>
     </section>
