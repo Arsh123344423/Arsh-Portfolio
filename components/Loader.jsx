@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation';
 import { initSynth, toggleMute } from '@/lib/AudioEngine';
 
 /**
- * Loader — Premium landing overlay with sophisticated animations.
- * Triggers audio and routes to the main portfolio page.
+ * Loader — Modern minimalist landing with particle background and ghost cursor
  */
 export default function Loader() {
   const router = useRouter();
@@ -20,14 +19,10 @@ export default function Loader() {
   const handleClick = useCallback(() => {
     setIsLoading(true);
     
-    // Trigger the audio context
     initSynth();
     toggleMute();
-    
-    // Unlock scrolling in case it's still locked on body
     document.body.classList.remove('locked');
 
-    // Smooth transition before routing
     setTimeout(() => {
       router.push('/home');
     }, 600);
@@ -37,84 +32,67 @@ export default function Loader() {
 
   return (
     <div className="fixed inset-0 bg-black z-[10000] flex justify-center items-center pointer-events-auto overflow-hidden">
-      {/* Animated gradient overlay */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-black to-cyan-600/20 animate-pulse" />
-      </div>
-
       {/* Main content container */}
-      <div className={`relative z-10 text-center flex flex-col items-center justify-center p-6 md:p-12 w-[90%] md:w-[85%] lg:w-[70%] max-w-2xl pointer-events-auto transition-all duration-700 ${
-        mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      } ${isLoading ? 'opacity-0 translate-y-4' : ''}`}>
+      <div className={`relative z-10 text-center flex flex-col items-center justify-center px-6 md:px-12 w-full max-w-4xl pointer-events-auto transition-all duration-700 ${
+        mounted ? 'opacity-100' : 'opacity-0'
+      } ${isLoading ? 'opacity-0 scale-95' : ''}`}>
         
-        {/* Top accent line */}
-        <div className="h-px w-16 bg-gradient-to-r from-transparent via-red-600 to-transparent mb-8 animate-pulse" />
-
-        {/* System status label */}
-        <div className="inline-block mb-6 px-3 py-1 border border-red-600/50 rounded-full">
-          <span className="font-mono text-xs tracking-widest text-red-500 uppercase">System Online</span>
-        </div>
-
-        {/* Main heading */}
-        <h1 className="glitch text-[clamp(3.5rem,10vw,5.5rem)] font-black tracking-tight leading-[0.95] mb-6 text-white drop-shadow-[0_0_30px_rgba(255,0,60,0.4)]" data-text="NEO-ZEN">
-          NEO-ZEN
+        {/* Main heading - Large and bold */}
+        <h1 className="text-6xl md:text-8xl font-bold tracking-tight leading-[1.1] mb-6 text-white">
+          <span className="block">ARSH</span>
+          <span className="block text-4xl md:text-6xl font-light text-gray-400 mt-2">Creative Developer</span>
         </h1>
 
-        {/* Subheading */}
-        <p className="font-light text-base md:text-lg text-gray-300 tracking-wide mb-2 max-w-xl">
-          CYBER SAMURAI PORTFOLIO
+        {/* Tagline */}
+        <p className="text-base md:text-lg text-gray-300 font-light tracking-wide mb-2 max-w-2xl leading-relaxed">
+          Crafting immersive digital experiences with code, creativity, and precision
         </p>
 
-        {/* Description */}
-        <p className="font-mono text-xs md:text-sm text-gray-400 tracking-widest mb-12 max-w-lg uppercase">
-          Immersive 3D Web Experience — Code × Craft × Culture
+        {/* Descriptive text */}
+        <p className="text-sm text-gray-500 tracking-widest uppercase mb-12 max-w-lg">
+          Interactive 3D • Full Stack Development • Creative Coding
         </p>
 
-        {/* Interactive button with state */}
-        <div className="flex flex-col items-center w-full gap-6 pointer-events-auto">
+        {/* Interactive button with minimal design */}
+        <div className="flex flex-col items-center w-full gap-8 pointer-events-auto">
           <button
             onClick={handleClick}
             disabled={isLoading}
-            className={`group relative px-8 md:px-10 py-3 md:py-4 text-sm md:text-base font-mono font-bold tracking-widest uppercase transition-all duration-300 ${
+            className={`group relative px-10 py-4 text-base font-light tracking-widest uppercase transition-all duration-300 border border-white/30 hover:border-white/100 ${
               isLoading
                 ? 'opacity-50 cursor-not-allowed'
-                : 'hover:scale-105 active:scale-95'
+                : 'hover:bg-white/5'
             }`}
           >
-            {/* Button background with gradient glow */}
-            <div className={`absolute inset-0 bg-gradient-to-r from-red-600 to-red-700 rounded-sm transition-all duration-300 ${
-              isLoading ? 'opacity-70' : 'group-hover:shadow-[0_0_30px_rgba(255,0,60,0.8)] opacity-100'
-            }`} />
-            
-            {/* Button text */}
-            <span className="relative z-10 text-white flex items-center gap-2">
+            <span className="relative z-10 text-white flex items-center gap-3">
               {isLoading ? (
                 <>
-                  <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  INITIALIZING
+                  <span className="inline-block w-3 h-3 border border-white/60 border-t-white rounded-full animate-spin" />
+                  Entering
                 </>
               ) : (
                 <>
-                  UNLOCK THE REALITY
-                  <span className="transition-transform group-hover:translate-x-1">→</span>
+                  Enter Experience
+                  <span className="transition-transform group-hover:translate-x-1 text-white/60">→</span>
                 </>
               )}
             </span>
           </button>
 
-          {/* Bottom accent line */}
-          <div className="h-px w-16 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
-
-          {/* Call to action */}
-          <p className="font-mono text-xs text-gray-500 tracking-widest uppercase animate-pulse mt-2">
-            Click to Begin Your Journey
+          {/* Scroll indicator */}
+          <p className="text-xs text-gray-600 tracking-widest uppercase mt-4">
+            Move cursor to see particles
           </p>
         </div>
       </div>
 
-      {/* Bottom corner accent */}
-      <div className="absolute bottom-8 right-8 text-xs font-mono text-gray-700 opacity-50">
-        neo-zen.v1
+      {/* Floating accent elements */}
+      <div className="absolute top-10 left-10 w-px h-12 bg-gradient-to-b from-white/20 to-transparent" />
+      <div className="absolute bottom-10 right-10 w-12 h-px bg-gradient-to-r from-transparent to-white/20" />
+      
+      {/* Version badge */}
+      <div className="absolute bottom-8 left-8 text-xs text-gray-600 tracking-widest">
+        PORTFOLIO V2.0
       </div>
     </div>
   );
