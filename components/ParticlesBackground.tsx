@@ -53,7 +53,7 @@ export default function ParticlesBackground({
     container.appendChild(renderer.domElement);
 
     // ── Particle geometry ────────────────────────────────────────────────────
-    const PARTICLE_COUNT = 2000;
+    const PARTICLE_COUNT = 500;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(PARTICLE_COUNT * 3);
     const colors    = new Float32Array(PARTICLE_COUNT * 3);
@@ -169,8 +169,8 @@ export default function ParticlesBackground({
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 
-      particles.rotation.x += 0.0005;
-      particles.rotation.y += 0.001;
+      particles.rotation.x += 0.0002;
+      particles.rotation.y += 0.0005;
 
       camera.position.x += (mouseX  - camera.position.x) * 0.05;
       camera.position.y += (-mouseY - camera.position.y) * 0.05;

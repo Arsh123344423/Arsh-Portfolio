@@ -1,18 +1,25 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { initSynth, toggleMute } from '@/lib/AudioEngine';
 
-
 /**
- * Loader — Full-screen landing overlay with "UNLOCK THE REALITY" button.
+ * Loader — Premium landing overlay with sophisticated animations.
  * Triggers audio and routes to the main portfolio page.
  */
 export default function Loader() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleClick = useCallback(() => {
+    setIsLoading(true);
+    
     // Trigger the audio context
     initSynth();
     toggleMute();
@@ -20,32 +27,94 @@ export default function Loader() {
     // Unlock scrolling in case it's still locked on body
     document.body.classList.remove('locked');
 
-    // Route to the portfolio
-    router.push('/home');
+    // Smooth transition before routing
+    setTimeout(() => {
+      router.push('/home');
+    }, 600);
   }, [router]);
 
+  if (!mounted) return null;
+
   return (
-    <div className="fixed inset-0 bg-transparent z-[10000] flex justify-center items-center pointer-events-auto overflow-hidden">
-      
-      <div className="relative z-10 text-center flex flex-col items-center justify-center p-[45px] md:p-[45px] w-[90%] md:w-1/2 h-auto min-h-[300px] pointer-events-auto mx-auto bg-black/80 border border-cyber-red/30 backdrop-blur-sm">
-        <div className="font-mono text-[0.75rem] tracking-[5px] text-cyber-red mb-[0.9rem] animate-pulse">// SYSTEM ACCESS //</div>
-        <h1 className="glitch text-[clamp(6rem,7.5vw,4.5rem)] font-black tracking-[-2px] leading-[0.9] mb-[18px] text-white" data-text="NEO-ZEN">
+    <div className="fixed inset-0 bg-black z-[10000] flex justify-center items-center pointer-events-auto overflow-hidden">
+      {/* Animated gradient overlay */}
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-black to-cyan-600/20 animate-pulse" />
+      </div>
+
+      {/* Main content container */}
+      <div className={`relative z-10 text-center flex flex-col items-center justify-center p-6 md:p-12 w-[90%] md:w-[85%] lg:w-[70%] max-w-2xl pointer-events-auto transition-all duration-700 ${
+        mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      } ${isLoading ? 'opacity-0 translate-y-4' : ''}`}>
+        
+        {/* Top accent line */}
+        <div className="h-px w-16 bg-gradient-to-r from-transparent via-red-600 to-transparent mb-8 animate-pulse" />
+
+        {/* System status label */}
+        <div className="inline-block mb-6 px-3 py-1 border border-red-600/50 rounded-full">
+          <span className="font-mono text-xs tracking-widest text-red-500 uppercase">System Online</span>
+        </div>
+
+        {/* Main heading */}
+        <h1 className="glitch text-[clamp(3.5rem,10vw,5.5rem)] font-black tracking-tight leading-[0.95] mb-6 text-white drop-shadow-[0_0_30px_rgba(255,0,60,0.4)]" data-text="NEO-ZEN">
           NEO-ZEN
         </h1>
-        <p className="font-mono text-[0.9rem] text-cyber-blue tracking-[2px] mb-[0.9rem]">AN INTERACTIVE 3D DIGITAL DIMENSION</p>
-        
 
-        <div className="flex flex-col items-center w-full mt-[0.9rem] pointer-events-auto">
+        {/* Subheading */}
+        <p className="font-light text-base md:text-lg text-gray-300 tracking-wide mb-2 max-w-xl">
+          CYBER SAMURAI PORTFOLIO
+        </p>
+
+        {/* Description */}
+        <p className="font-mono text-xs md:text-sm text-gray-400 tracking-widest mb-12 max-w-lg uppercase">
+          Immersive 3D Web Experience — Code × Craft × Culture
+        </p>
+
+        {/* Interactive button with state */}
+        <div className="flex flex-col items-center w-full gap-6 pointer-events-auto">
           <button
-            className="font-mono text-[0.9rem] font-bold tracking-[2px] px-[30px] py-[11px] bg-cyber-red-dim text-white border-2 border-cyber-red cursor-pointer transition-all duration-300 hover:bg-cyber-red hover:shadow-[0_0_20px_rgba(255,0,60,0.6)]"
             onClick={handleClick}
+            disabled={isLoading}
+            className={`group relative px-8 md:px-10 py-3 md:py-4 text-sm md:text-base font-mono font-bold tracking-widest uppercase transition-all duration-300 ${
+              isLoading
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:scale-105 active:scale-95'
+            }`}
           >
-            UNLOCK THE REALITY
+            {/* Button background with gradient glow */}
+            <div className={`absolute inset-0 bg-gradient-to-r from-red-600 to-red-700 rounded-sm transition-all duration-300 ${
+              isLoading ? 'opacity-70' : 'group-hover:shadow-[0_0_30px_rgba(255,0,60,0.8)] opacity-100'
+            }`} />
+            
+            {/* Button text */}
+            <span className="relative z-10 text-white flex items-center gap-2">
+              {isLoading ? (
+                <>
+                  <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  INITIALIZING
+                </>
+              ) : (
+                <>
+                  UNLOCK THE REALITY
+                  <span className="transition-transform group-hover:translate-x-1">→</span>
+                </>
+              )}
+            </span>
           </button>
-          <div className="font-mono text-[0.6rem] text-cyber-red tracking-[2px] mt-[11px] opacity-70 animate-pulse">
-            CLICK TO UNLEASH THE SENSES
-          </div>
+
+          {/* Bottom accent line */}
+          <div className="h-px w-16 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
+
+          {/* Call to action */}
+          <p className="font-mono text-xs text-gray-500 tracking-widest uppercase animate-pulse mt-2">
+            Click to Begin Your Journey
+          </p>
         </div>
+      </div>
+
+      {/* Bottom corner accent */}
+      <div className="absolute bottom-8 right-8 text-xs font-mono text-gray-700 opacity-50">
+        neo-zen.v1
       </div>
     </div>
   );
