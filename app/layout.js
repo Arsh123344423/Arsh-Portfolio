@@ -1,7 +1,7 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Arsh | Creative Developer & Designer',
+  title: 'Arsh Portfolio',
   description:
     'Modern interactive portfolio showcasing full-stack development, creative coding, and immersive 3D experiences.',
 };
@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body className="locked">
+      <body>
         <GlobalEffects />
         {children}
       </body>
