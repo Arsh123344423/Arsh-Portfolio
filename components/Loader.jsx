@@ -3,7 +3,9 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { initSynth, toggleMute } from '@/lib/AudioEngine';
-import ShinyText from '@/components/ShinyText';
+import ShinyText from './ShinyText';
+import BorderGlow from './BorderGlow';
+
 
 /**
  * Loader — Clean modernistic landing with responsive design
@@ -53,7 +55,7 @@ export default function Loader() {
       } ${isLoading ? 'opacity-0 scale-95' : ''}`}>
         
         {/* Premium headline with enhanced visual weight */}
-        <h1 className="relative mb-5 m-20 opacity-0 animate-fade-in max-w-7xl" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
+        <h1 className="relative mb-15 m-20 opacity-0 animate-fade-in max-w-7xl" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
           <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-[120px] font-black tracking-tighter leading-[0.95] text-white">
             Arsh
           </span>
@@ -63,14 +65,14 @@ export default function Loader() {
         </h1>
 
         {/* Premium subtitle with enhanced messaging */}
-        <div className="max-w-2xl mb-10 sm:mb-12 md:mb-14 opacity-0 animate-fade-in" style={{ animationDelay: '0.35s', animationFillMode: 'forwards' }}>
+        <div className="max-w-2xl mb-8 sm:mb-10 md:mb-12 opacity-0 animate-fade-in" style={{ animationDelay: '0.35s', animationFillMode: 'forwards' }}>
           <p className="text-lg sm:text-xl text-gray-300 leading-relaxed font-light tracking-wide">
             Welcomes you all to his portfolio playground, where code and creativity collide
           </p>
         </div>
 
         {/* Secondary tagline */}
-        <div className="mb-16 sm:mb-10 md:mb-20 opacity-0 animate-fade-in max-w-xl" style={{ animationDelay: '0.50s', animationFillMode: 'forwards' }}>
+        <div className="mb-10 sm:mb-4 md:mb-14 opacity-0 animate-fade-in max-w-xl" style={{ animationDelay: '0.50s', animationFillMode: 'forwards' }}>
           <ShinyText
             text="Life of an Ai Full-Stack Developer"
             speed={10}
@@ -86,26 +88,41 @@ export default function Loader() {
         </div>
 
         {/* Premium CTA button with enhanced styling */}
-        <button
-          onClick={handleClick}
-          disabled={isLoading}
-          className={`opacity-0 animate-fade-in group relative px-7 sm:px-9 mb-20 md:px-11 py-3 sm:py-3.5 md:py-4 text-sm sm:text-base font-medium transition-all duration-700 text-white border border-white/40 rounded-full ${
-            isLoading
-              ? 'opacity-50 cursor-not-allowed'
-              : 'hover:border-white/100 hover:bg-white/5 hover:shadow-lg hover:shadow-white/10 active:scale-95'
-          }`}
-          style={{ animationDelay: '0.65s', animationFillMode: 'forwards' }}
+        <BorderGlow
+          edgeSensitivity={30}
+          glowColor="40 80 80"
+          backgroundColor="#120F17"
+          borderRadius={9999} // full pill shape
+          glowRadius={40}
+          glowIntensity={1}
+          coneSpread={25}
+          animated={false}
+          colors={['#c084fc', '#f472b6', '#38bdf8']}
         >
-          {isLoading ? (
-            <span className="flex items-center justify-center gap-2">
-              <span className="inline-block w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
-            </span>
-          ) : (
-            <span className="flex items-center justify-center gap-3 text-base">
-              View My Work
-            </span>
-          )}
-        </button>
+          <button
+            onClick={handleClick}
+            disabled={isLoading}
+            className={`group relative px-7 sm:px-9 md:px-11 py-3 sm:py-3.5 md:py-4 text-sm sm:text-base font-medium transition-all duration-700 text-white rounded-full ${
+              isLoading
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:bg-white/5 active:scale-95'
+            }`}
+            style={{
+              animationDelay: '0.65s',
+              animationFillMode: 'forwards',
+            }}
+          >
+            {isLoading ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="inline-block w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+              </span>
+            ) : (
+              <span className="flex items-center justify-center gap-3 text-base">
+                View My Work
+              </span>
+            )}
+          </button>
+        </BorderGlow>
 
         
       </div>
