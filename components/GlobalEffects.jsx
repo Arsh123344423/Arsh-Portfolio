@@ -1,13 +1,8 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-
-const Scene3DBackground = dynamic(() => import('@/components/Scene3DBackground'), { ssr: false });
-
+// Global visual effects were removed — keep this component as a no-op
+// to avoid rendering the particle / 3D background. This allows a plain
+// black background everywhere while keeping the layout import stable.
 export default function GlobalEffects() {
-  return (
-    <>
-      <Scene3DBackground />
-    </>
-  );
+  return null;
 }
