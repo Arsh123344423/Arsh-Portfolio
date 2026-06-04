@@ -16,8 +16,7 @@ export default function HUD({ canvasRef }) {
     const viewport = viewportRef.current;
     if (!viewport) return;
 
-    // Start hidden — SamuraiCanvas will load asynchronously
-    // and the hero will bring it in via IntersectionObserver below.
+    // Start hidden — the viewport will fade in when the hero section is visible.
     viewport.style.opacity = '0';
     viewport.style.transition = 'opacity 0.6s ease';
 

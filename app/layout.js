@@ -6,8 +6,6 @@ export const metadata = {
     'Modern interactive portfolio showcasing full-stack development, creative coding, and immersive 3D experiences.',
 };
 
-import GlobalEffects from '@/components/GlobalEffects';
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -24,7 +22,6 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <GlobalEffects />
         {children}
       </body>
     </html>
