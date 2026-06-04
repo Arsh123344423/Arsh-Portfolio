@@ -55,7 +55,7 @@ export default function Loader() {
       } ${isLoading ? 'opacity-0 scale-95' : ''}`}>
         
         {/* Premium headline with enhanced visual weight */}
-        <h1 className="relative mb-15 m-20 opacity-0 animate-fade-in max-w-7xl" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
+        <h1 className="relative mb-12 m-4 mt-0 opacity-0 animate-fade-in max-w-7xl" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
           <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-[120px] font-black tracking-tighter leading-[0.95] text-white">
             Arsh
           </span>
@@ -65,7 +65,7 @@ export default function Loader() {
         </h1>
 
         {/* Premium subtitle with enhanced messaging */}
-        <div className="max-w-2xl mb-8 sm:mb-10 md:mb-12 opacity-0 animate-fade-in" style={{ animationDelay: '0.35s', animationFillMode: 'forwards' }}>
+        <div className="max-w-2xl mb-9 sm:mb-10 md:mb-12 opacity-0 animate-fade-in" style={{ animationDelay: '0.35s', animationFillMode: 'forwards' }}>
           <p className="text-lg sm:text-xl text-gray-300 leading-relaxed font-light tracking-wide">
             Welcomes you all to his portfolio playground, where code and creativity collide
           </p>
