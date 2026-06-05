@@ -55,13 +55,12 @@ export default function HeroSection() {
         <FadeIn delay={0.35} y={10} className="flex-shrink-0">
           <p
             className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug
-              max-w-[30%] sm:max-w-[30%] md:max-w-[30%] flex-shrink-0"
+              max-w-[30%] sm:max-w-[30%] md:max-w-[30%] flex-shrink-0 pb-4"
             style={{ fontSize: 'clamp(0.75rem, 1.4vw, 1.5rem)' }}
           >
             <span className="block">a 3d creator</span>
             <span className="block">driven by crafting</span>
             <span className="block">striking and unforgettable</span>
-            <span className="block h-4"></span>
           </p>
         </FadeIn>
         <FadeIn delay={0.5} y={20} >
