@@ -144,7 +144,7 @@ export default function ProjectsSection() {
         </h2>
       </FadeIn>
 
-      <div className="flex flex-col gap-6 mt-16 sm:mt-20 md:mt-28">
+      <div className="relative flex flex-col gap-6 mt-16 sm:mt-20 md:mt-28">
         {projects.map((project, i) => (
           <ProjectCard
             key={project.num}
