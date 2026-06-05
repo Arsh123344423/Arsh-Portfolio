@@ -58,9 +58,9 @@ export default function HeroSection() {
               max-w-[30%] sm:max-w-[30%] md:max-w-[30%] flex-shrink-0"
             style={{ fontSize: 'clamp(0.75rem, 1.4vw, 1.5rem)' }}
           >
-            <span className="block">a 3d creator driven by</span>
-            <span className="block">crafting striking and</span>
-            <span className="block">unforgettable</span>
+            <span className="block">a 3d creator</span>
+            <span className="block">driven by crafting</span>
+            <span className="block">striking and unforgettable</span>
             <span className="block h-4"></span>
           </p>
         </FadeIn>
