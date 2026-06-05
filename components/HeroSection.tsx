@@ -6,7 +6,7 @@ const navLinks = ['About', 'Price', 'Projects', 'Contact'];
 
 export default function HeroSection() {
   return (
-    <section className="h-screen flex flex-col overflow-x-clip relative bg-dark mb-50">
+    <section className="min-h-screen flex flex-col overflow-x-clip relative bg-dark mb-50">
       {/* Navbar */}
       <FadeIn delay={0} y={-20} className="flex justify-between px-6 md:px-10 pt-6 md:pt-8">
         {navLinks.map((link) => (
@@ -51,16 +51,17 @@ export default function HeroSection() {
       </FadeIn>
 
       {/* Bottom Bar */}
-      <div className="mt-auto flex justify-between items-center gap-7 pb-20 sm:pb-20 md:pb-20 px-6 md:px-10">
-        <FadeIn delay={0.35} y={10} className="flex-shrink-0">
+      <div className="mt-auto flex justify-between items-end gap-7 pb-20 sm:pb-20 md:pb-20 px-6 md:px-10">
+        <FadeIn delay={0.35} y={10} className="flex-shrink-0 pb-2">
           <p
             className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug
-              max-w-[30%] sm:max-w-[30%] md:max-w-[30%] flex-shrink-0 mb-100"
+              max-w-[30%] sm:max-w-[30%] md:max-w-[30%] flex-shrink-0"
             style={{ fontSize: 'clamp(0.75rem, 1.4vw, 1.5rem)' }}
           >
             <span className="block">a 3d creator driven by</span>
             <span className="block">crafting striking and</span>
             <span className="block">unforgettable</span>
+            <span className="block h-4"></span>
           </p>
         </FadeIn>
         <FadeIn delay={0.5} y={20} >

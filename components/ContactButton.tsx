@@ -5,12 +5,11 @@ export default function ContactButton() {
       className="rounded-full font-medium uppercase tracking-widest text-white
         px-[28px] py-[16px] sm:px-[34px] sm:py-[18px] md:px-[40px] md:py-[20px]
         min-w-[170px] sm:min-w-[210px] text-sm sm:text-base md:text-lg
-        cursor-pointer transition-transform duration-200 ease-out hover:scale-[1.03]"
+        cursor-pointer transition-all duration-300 ease-out hover:scale-[1.05] hover:shadow-lg active:scale-[0.98]"
       style={{
-        background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
-        boxShadow: '0px 4px 4px rgba(181, 1, 167, 0.25), inset 4px 4px 12px #7721B1',
-        outline: '2px solid white',
-        outlineOffset: '-3px',
+        background: 'linear-gradient(135deg, #7621B0 0%, #B600A8 50%, #BE4C00 100%)',
+        boxShadow: '0px 8px 24px rgba(182, 0, 168, 0.35), inset 1px 1px 0px rgba(255, 255, 255, 0.2)',
+        border: '1px solid rgba(255, 255, 255, 0.15)',
       }}
     >
       Contact Me
