@@ -75,9 +75,9 @@ export default function Loader() {
         <div className="mb-10 sm:mb-4 md:mb-14 opacity-0 animate-fade-in max-w-xl" style={{ animationDelay: '0.50s', animationFillMode: 'forwards' }}>
           <ShinyText
             text="Life of an Ai Full-Stack Developer"
-            speed={10}
+            speed={3}
             delay={0}
-            color="#b5b5b5"
+            color="#b5b5b5d2"
             shineColor="#ffffff"
             spread={120}
             direction="left"
