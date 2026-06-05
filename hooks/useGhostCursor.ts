@@ -31,7 +31,7 @@ export function useGhostCursor() {
     };
 
     const handleMouseLeave = () => {
-      cursor.style.opacity = '0';
+      cursor.style.opacity = '1';
       trailRef.current = [];
     };
 

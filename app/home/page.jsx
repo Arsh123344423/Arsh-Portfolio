@@ -1,17 +1,13 @@
 'use client';
 
-// UI Components
-import Nav              from '@/components/Nav';
-import ScrollAnimations from '@/components/ScrollAnimations';
 
-// Sections
-import Hero     from '@/components/sections/Hero';
-import About    from '@/components/sections/About';
-import Skills   from '@/components/sections/Skills';
-import Projects from '@/components/sections/Projects';
-import AudioControl from '@/components/AudioControl';
-
-import Contact  from '@/components/sections/Contact';
+import HeroSection from "@/components/HeroSection";
+import MarqueeSection from '@/components/MarqueeSection';
+import AboutSection from '@/components/AboutSection';
+import ServicesSection from '@/components/ServicesSection';
+import ProjectsSection from '@/components/ProjectsSection';
+import { StrictMode } from 'react';
+import './index.css';
 
 /**
  * Portfolio Home Page
@@ -20,19 +16,15 @@ import Contact  from '@/components/sections/Contact';
 export default function PortfolioPage() {
   return (
     <>
-      <Nav />
-      <AudioControl />
-      {/* Scrollable content sections */}
-      <div id="scroll-container">
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Contact />
-      </div>
-
-      {/* GSAP scroll-triggered animations */}
-      <ScrollAnimations />
+      <StrictMode>
+        <div style={{ overflowX: 'clip' , paddingRight: '3%', paddingLeft: '3%' , paddingTop: '2%' }}>
+          <HeroSection />
+          <MarqueeSection />
+          <AboutSection />
+          <ServicesSection />
+          <ProjectsSection />
+        </div>
+      </StrictMode>
     </>
   );
 }
