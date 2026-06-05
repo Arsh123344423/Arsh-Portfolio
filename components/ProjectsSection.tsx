@@ -61,7 +61,6 @@ function ProjectCard({
     <div
       ref={containerRef}
       className="h-[85vh] relative"
-      style={{ top: `${index * 28}px` }}
     >
       <motion.div
         style={{ scale, top: '5rem' }}
@@ -144,7 +143,7 @@ export default function ProjectsSection() {
         </h2>
       </FadeIn>
 
-      <div className="flex flex-col gap-6 mt-16 sm:mt-20 md:mt-28">
+      <div className="flex flex-col gap-0 -space-y-40 mt-16 sm:mt-20 md:mt-28">
         {projects.map((project, i) => (
           <ProjectCard
             key={project.num}
