@@ -71,7 +71,7 @@
     font-family: var(--font-sans);
     overflow-x: hidden;
     overflow-y: auto;
-    width: 100vw;
+    width: 100dvw;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

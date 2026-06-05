@@ -1,5 +1,4 @@
 "use client";
-
 import FadeIn from './FadeIn';
 import Magnet from './Magnet';
 import ContactButton from './ContactButton';
@@ -8,7 +7,8 @@ const navLinks = ['About', 'Price', 'Projects', 'Contact'];
 
 export default function HeroSection() {
   return (
-    <section className="min-h-screen flex flex-col overflow-x-clip relative bg-dark mb-50">
+    <section className="min-h-screen flex flex-col overflow-x-clip relative ">
+      <div className="relative z-10 flex flex-col gap-10 max-w-8xl mx-auto">
       {/* Navbar */}
       <FadeIn delay={0} y={-20} className="flex justify-between px-6 md:px-10 pt-6 md:pt-8">
         {navLinks.map((link) => (
@@ -16,7 +16,7 @@ export default function HeroSection() {
             key={link}
             href={`#${link.toLowerCase()}`}
             className="text-[#D7E2EA] font-medium uppercase tracking-wider
-              text-sm md:text-lg lg:text-[1.4rem]
+              text-sm md:text-lg lg:text-[1.4rem] m-50
               hover:opacity-70 transition-opacity duration-200"
           >
             {link}
@@ -44,30 +44,33 @@ export default function HeroSection() {
       >
         <Magnet padding={150} strength={3}>
           <img
-            src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
-            alt="Jack portrait"
-            className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] object-contain"
+            src="/Arsh.png"
+            alt="Arsh's portrait"
+            className="w-[450px] sm:w-[530px] md:w-[710px] lg:w-[790px] object-contain"
             loading="lazy"
           />
         </Magnet>
       </FadeIn>
 
       {/* Bottom Bar */}
-      <div className="mt-auto flex justify-between items-center gap-7 pb-20 sm:pb-20 md:pb-20 px-6 md:px-10">
+      <div className="mt-auto flex justify-between items-center gap-1 pb-20 sm:pb-20 md:pb-20 px-6 md:px-10">
         <FadeIn delay={0.35} y={10} className="flex-shrink-0">
           <p
             className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug
               max-w-[30%] sm:max-w-[30%] md:max-w-[30%] flex-shrink-0 pb-4"
             style={{ fontSize: 'clamp(0.75rem, 1.4vw, 1.5rem)' }}
           >
-            <span className="block">a 3d creator</span>
-            <span className="block">driven by crafting</span>
-            <span className="block">striking and unforgettable</span>
+            <span className="block h-20"></span>
+            <span className="block ">A 3D full-stack Ai software developer</span>
+            <span className="block h-15"></span>
           </p>
         </FadeIn>
-        <FadeIn delay={0.5} y={20} >
-          <ContactButton />
+        <FadeIn delay={0.5} y={20}  >
+          <div className="flex gap-6 sm:gap-8 md:gap-10 lg:gap-12 mr-10">
+            <ContactButton />
+          </div>
         </FadeIn>
+      </div>
       </div>
     </section>
   );

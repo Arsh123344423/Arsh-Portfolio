@@ -28,6 +28,9 @@ export default function Loader() {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.body.classList.remove('locked');
+      // Ensure scroll is fully unlocked
+      document.body.style.overflow = '';
+      document.body.style.height = '';
     };
   }, []);
 
@@ -36,6 +39,8 @@ export default function Loader() {
     initSynth();
     toggleMute();
     document.body.classList.remove('locked');
+    document.body.style.overflow = '';
+    document.body.style.height = '';
 
     setTimeout(() => {
       router.push('/home');
