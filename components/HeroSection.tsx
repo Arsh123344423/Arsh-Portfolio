@@ -64,7 +64,7 @@ export default function HeroSection() {
           </p>
         </FadeIn>
         <FadeIn delay={0.5} y={20} >
-          <ContactButton size="sm" />
+          <ContactButton />
         </FadeIn>
       </div>
     </section>
