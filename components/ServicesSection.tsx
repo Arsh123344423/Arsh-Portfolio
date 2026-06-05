@@ -19,7 +19,7 @@ const services = [
   {
     num: '04',
     name: 'Branding',
-    desc: "Crafting cohesive visual identities -- from logos to full brand systems -- that communicate a clear and memorable presence.",
+    desc: 'Crafting cohesive visual identities -- from logos to full brand systems -- that communicate a clear and memorable presence.',
   },
   {
     num: '05',
@@ -33,7 +33,7 @@ export default function ServicesSection() {
     <section
       id="price"
       className="bg-white rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px]
-        px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32"
+        px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32 mt-90 sm:mt-120 md:mt-150 mb-90 sm:mb-120 md:mb-150"
     >
       <h2
         className="text-[#0C0C0C] font-black uppercase text-center leading-none tracking-tight
@@ -43,12 +43,12 @@ export default function ServicesSection() {
         Services
       </h2>
 
-      <div className="max-w-5xl mx-auto flex flex-col">
+      <div className="max-w-5xl mx-auto flex mt-90 flex-col">
         {services.map((service, i) => (
           <FadeIn
             key={service.num}
             delay={i * 0.1}
-            className={`flex items-start py-8 sm:py-10 md:py-12
+            className={`flex items-start gap-8 md:gap-12 py-8 sm:py-10 md:py-12
               ${i > 0 ? 'border-t border-[rgba(12,12,12,0.15)]' : ''}`}
           >
             <span
@@ -57,13 +57,15 @@ export default function ServicesSection() {
             >
               {service.num}
             </span>
-            <div className="flex flex-col ml-4 md:ml-6 mt-2">
+
+            <div className="flex flex-col mt-25 gap-2">
               <span
-                className="font-medium uppercase text-[#0C0C0C]"
+                className="font-medium uppercase text-[#0C0C0C] tracking-[0.08em]"
                 style={{ fontSize: 'clamp(1rem, 2.2vw, 2.1rem)' }}
               >
                 {service.name}
               </span>
+
               <span
                 className="font-light leading-relaxed max-w-2xl opacity-60 text-[#0C0C0C]"
                 style={{ fontSize: 'clamp(0.85rem, 1.6vw, 1.25rem)' }}

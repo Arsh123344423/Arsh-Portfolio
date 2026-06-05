@@ -17,12 +17,14 @@ export default function PortfolioPage() {
   return (
     <>
       <StrictMode>
-        <div style={{ overflowX: 'clip' , paddingRight: '3%', paddingLeft: '3%' , paddingTop: '2%' }}>
+        <div className="relative z-0 flex flex-col gap-4 w-full overflow-x-hidden pt-[2%]">
           <HeroSection />
           <MarqueeSection />
-          <AboutSection />
-          <ServicesSection />
-          <ProjectsSection />
+          <div className="flex flex-col gap-20 px-6 md:px-10 w-full mx-auto"> 
+            <AboutSection />
+            <ServicesSection />
+            <ProjectsSection />
+          </div>
         </div>
       </StrictMode>
     </>
