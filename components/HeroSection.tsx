@@ -60,7 +60,7 @@ export default function HeroSection() {
           >
             <span className="block">a 3d creator driven by</span>
             <span className="block">crafting striking and</span>
-            <span className="block">unforgettable                                        </span>
+            <span className="block">unforgettable</span>
           </p>
         </FadeIn>
         <FadeIn delay={0.5} y={20} >

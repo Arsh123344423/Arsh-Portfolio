@@ -20,3 +20,7 @@ html, body, #root {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+.bg-dark {
+  background-color: #0C0C0C;
+}
