@@ -61,10 +61,10 @@ function ProjectCard({
     <div
       ref={containerRef}
       className="h-[85vh] relative"
-      style={{ zIndex: totalCards - index }}
+      style={{ top: `${index * 28}px` }}
     >
       <motion.div
-        style={{ scale, top: `${index * 60}px` }}
+        style={{ scale, top: '5rem' }}
         className="sticky top-24 md:top-32 rounded-[40px] sm:rounded-[50px] md:rounded-[60px]
           border-2 border-[#D7E2EA] bg-dark
           p-4 sm:p-6 md:p-8"
@@ -144,7 +144,7 @@ export default function ProjectsSection() {
         </h2>
       </FadeIn>
 
-      <div className="relative mt-16 sm:mt-20 md:mt-28">
+      <div className="relative flex flex-col gap-6 mt-16 sm:mt-20 md:mt-28">
         {projects.map((project, i) => (
           <ProjectCard
             key={project.num}

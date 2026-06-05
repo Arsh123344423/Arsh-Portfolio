@@ -65,6 +65,16 @@ export default function HeroSection() {
         </FadeIn>
         <FadeIn delay={0.5} y={20} >
           <ContactButton />
+              max-w-[30%] sm:max-w-[30%] md:max-w-[30%] flex-shrink-0 mb-100"
+            style={{ fontSize: 'clamp(0.75rem, 1.4vw, 1.5rem)' }}
+          >
+            <span className="block">a 3d creator driven by</span>
+            <span className="block">crafting striking and</span>
+            <span className="block">unforgettable                                        </span>
+          </p>
+        </FadeIn>
+        <FadeIn delay={0.5} y={20} >
+          <ContactButton size="sm" />
         </FadeIn>
       </div>
     </section>
