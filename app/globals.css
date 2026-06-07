@@ -63,7 +63,12 @@
 @layer base {
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  html::-webkit-scrollbar { display: none; }
   
   body {
     background: #000000;
@@ -74,12 +79,17 @@
     width: 100dvw;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
+  body::-webkit-scrollbar { display: none; }
   
   body.locked { overflow: hidden; height: 100vh; }
-  
-  
 }
+
+/* Global scrollbar hide — catches any element */
+*::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; }
 
 /* ── Custom Utilities ───────────────────────────────────────────────────────── */
 @layer utilities {
@@ -128,3 +138,29 @@
     @apply min-h-screen w-screen px-5 py-20 flex justify-center items-center relative pointer-events-none;
   }
 }
+
+/* ── Custom Shiny Button Animations ── */
+@keyframes border-glow-white {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2), inset 0 0 4px rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(255, 255, 255, 0.7), inset 0 0 10px rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 1);
+  }
+}
+
+@keyframes shine-sweep {
+  0% {
+    left: -120%;
+  }
+  30%, 100% {
+    left: 220%;
+  }
+}
+
+.shiny-border-btn-glow {
+  animation: border-glow-white 3s infinite ease-in-out;
+}
+

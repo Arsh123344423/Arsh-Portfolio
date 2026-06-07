@@ -3,47 +3,48 @@ import FadeIn from './FadeIn';
 const services = [
   {
     num: '01',
-    name: '3D Modeling',
-    desc: 'Creation of detailed objects, characters, or environments tailored to specific client needs, ideal for games, products, and visualizations.',
+    name: 'AI Architectures',
+    desc: 'RAG , NLP and CNN architectures, Vector storage, Neo4j, LLM Reranking and response validation.',
   },
+  
   {
     num: '02',
-    name: 'Rendering',
-    desc: 'High-quality, photorealistic renders that showcase designs with custom lighting, textures, and materials to bring concepts to life.',
+    name: 'Forward Deployment',
+    desc: 'Deploying AI solutions to production environments, ensuring scalability, reliability, and performance while maintaining security and compliance standards.',
   },
   {
     num: '03',
-    name: 'Motion Design',
-    desc: 'Dynamic animations and motion graphics that add energy and storytelling to brands, products, and digital experiences.',
+    name: 'Backend Development',
+    desc: 'Building robust and scalable backend systems with a focus on performance, security, and maintainability.',
   },
   {
     num: '04',
-    name: 'Branding',
-    desc: 'Crafting cohesive visual identities -- from logos to full brand systems -- that communicate a clear and memorable presence.',
+    name: 'Frontend Development',
+    desc: 'Designing clean, modern, and conversion-focused websites with attention to layout, typography, and user experience.',
   },
   {
     num: '05',
-    name: 'Web Design',
-    desc: 'Designing clean, modern, and conversion-focused websites with attention to layout, typography, and user experience.',
+    name: 'Rendering',
+    desc: 'High-quality, photorealistic renders that showcase designs that bring concepts to life with attention to detail, lighting, and materials.',
   },
 ];
 
 export default function ServicesSection() {
   return (
     <section
-      id="price"
+      id="services"
       className="bg-white rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px]
         px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32 mt-90 sm:mt-120 md:mt-150 mb-90 sm:mb-120 md:mb-150"
     >
       <h2
         className="text-[#0C0C0C] font-black uppercase text-center leading-none tracking-tight
-          mb-16 sm:mb-20 md:mb-28"
+          mb-20 sm:mb-30 md:mb-40"
         style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
       >
         Services
       </h2>
 
-      <div className="max-w-5xl mx-auto flex mt-90 flex-col">
+      <div className="max-w-5xl max-h-5xl mx-auto flex flex-col">
         {services.map((service, i) => (
           <FadeIn
             key={service.num}
