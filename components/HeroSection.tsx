@@ -10,7 +10,7 @@ export default function HeroSection() {
     <section className="min-h-screen flex flex-col overflow-x-clip relative ">
       <div className="relative z-10 flex flex-col gap-10 max-w-8xl mx-auto">
       {/* Navbar */}
-      <FadeIn delay={0} y={-20} className="flex justify-between px-5 md:px-10 pt-6 md:pt-8">
+      <div className="flex justify-between px-5 md:px-10 pt-6 md:pt-8">
         {navLinks.map((link) => (
           <a
             key={link}
@@ -22,7 +22,7 @@ export default function HeroSection() {
             {link}
           </a>
         ))}
-      </FadeIn>
+      </div>
 
       {/* Hero Heading */}
       <FadeIn delay={0.15} y={40} className="overflow-hidden mt-6 sm:mt-4 md:-mt-5">
