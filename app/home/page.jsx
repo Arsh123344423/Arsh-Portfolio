@@ -6,6 +6,7 @@ import MarqueeSection from '@/components/MarqueeSection';
 import AboutSection from '@/components/AboutSection';
 import ServicesSection from '@/components/ServicesSection';
 import ProjectsSection from '@/components/ProjectsSection';
+import LogoSection from '@/components/LogoSection';
 import { StrictMode } from 'react';
 import './index.css';
 
@@ -23,6 +24,7 @@ export default function PortfolioPage() {
           <div className="flex flex-col gap-20 px-6 md:px-10 w-full mx-auto"> 
             <AboutSection />
             <ServicesSection />
+            <LogoSection />
             <ProjectsSection />
           </div>
         </div>

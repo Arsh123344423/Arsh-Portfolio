@@ -3,7 +3,7 @@ import AnimatedText from './AnimatedText';
 import ContactButton from './ContactButton';
 
 const aboutText =
-  "With more than five years of experience in design, i focus on branding, web design, and user experience, i truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!";
+  "I am a passionate young final-year undergraduate with 4 month internship experience in React Native Mobile Development. But my passion lies in creating immersive 3D websites and designs while also creating scalable AIOps Systems.";
 
 const decorImages = [
   {

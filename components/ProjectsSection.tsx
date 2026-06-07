@@ -6,28 +6,32 @@ import LiveProjectButton from './LiveProjectButton';
 const projects = [
   {
     num: '01',
-    name: 'Nextlevel Studio',
-    category: 'Client',
-    col1Img1: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85',
-    col1Img2: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85',
-    col2Img: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85',
+    name: 'Meet Up - Linkedin',
+    category: 'Personal',
+    col1Img1: './m1.png',
+    col1Img2: './m2.png',
+    col2Img: './m3.png',
+    link: 'https://www.linkedin.com/in/arshsrivastava72235a300/',
   },
   {
     num: '02',
-    name: 'Aura Brand Identity',
-    category: 'Personal',
-    col1Img1: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85',
-    col1Img2: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85',
-    col2Img: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85',
+    name: 'SwiftTrans',
+    category: 'Project',
+    col1Img1: './st1.png',
+    col1Img2: './st2.png',
+    col2Img: './st3.png',
+    link: 'https://www.linkedin.com/posts/arshsrivastava72235a300_ai-blockchain-fintech-activity-7319687328979988480-6c9N?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEzwQIoBgt53V93G9_GxPjAhHg71aKHfCtk',
   },
   {
     num: '03',
-    name: 'Solaris Digital',
-    category: 'Client',
-    col1Img1: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85',
-    col1Img2: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85',
-    col2Img: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85',
+    name: 'KalaKatha',
+    category: 'Project',
+    col1Img1: './kalakatha1.png',
+    col1Img2: './kalakatha2.png',
+    col2Img: './image.png',
+    link: 'https://kalakatha-frontend-test.vercel.app/',
   },
+  
 ];
 
 function ProjectCard({
@@ -87,7 +91,7 @@ function ProjectCard({
         }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between mb-4 bg-black sm:mb-6">
+        <div className="flex items-center justify-between mb-40 bg-black px-50 md:px-50">
           <div className="flex items-center gap-4 md:gap-8">
             <span
               className="font-black text-[#D7E2EA] leading-none"
@@ -159,7 +163,7 @@ export default function ProjectsSection() {
         md:rounded-t-[60px]
         relative z-10
         px-5 sm:px-8 md:px-10
-        py-20 sm:py-24 md:py-32
+        mt-[-70px] sm:mt-[-90px] md:mt-[-120px]
       "
     >
       <FadeIn delay={0} y={40}>
