@@ -113,7 +113,9 @@ function ProjectCard({
               </span>
             </div>
           </div>
+        <div className="mr-10 md:mr-20 p-20">
           <LiveProjectButton />
+        </div>
         </div>
 
         {/* Images */}

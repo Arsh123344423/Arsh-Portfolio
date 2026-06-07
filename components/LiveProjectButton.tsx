@@ -1,3 +1,5 @@
+import BorderGlow from './BorderGlow';
+
 export default function LiveProjectButton() {
   return (
     <button
