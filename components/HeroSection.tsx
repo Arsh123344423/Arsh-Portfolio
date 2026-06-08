@@ -2,24 +2,37 @@
 import FadeIn from './FadeIn';
 import Magnet from './Magnet';
 import ContactButton from './ContactButton';
+import { useRouter } from 'next/navigation';
 
-const navLinks = ['About', 'Services', 'Projects', 'Contact'];
+const navLinks = [
+  { label: 'About', href: '#about' },
+  { label: 'Services', href: '#services' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Contact', href: '/contact' },
+];
 
 export default function HeroSection() {
+  const router = useRouter();
   return (
     <section className="min-h-screen flex flex-col overflow-x-clip relative ">
       <div className="relative z-10 flex flex-col gap-10 max-w-8xl mx-auto">
       {/* Navbar */}
       <div className="flex justify-between px-5 md:px-10 pt-6 md:pt-8">
-        {navLinks.map((link) => (
+        {navLinks.map(({ label, href }) => (
           <a
-            key={link}
-            href={`#${link.toLowerCase()}`}
+            key={label}
+            href={href}
+            onClick={(e) => {
+              if (href === '/contact') {
+                e.preventDefault();
+                router.push('/contact');
+              }
+            }}
             className="text-[#D7E2EA] font-medium uppercase tracking-wider
               text-sm md:text-lg lg:text-[1.4rem] m-50
               hover:opacity-70 transition-opacity duration-200"
           >
-            {link}
+            {label}
           </a>
         ))}
       </div>
