@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const LINKS = [
   { href: '#hero',     label: 'Home' },
@@ -12,6 +13,7 @@ const LINKS = [
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   return (
     
 
@@ -33,6 +35,12 @@ const Nav = () => {
           <li key={href}>
             <a 
               href={href} 
+              onClick={(e) => {
+                if (href === '/contact') {
+                  e.preventDefault();
+                  router.push('/contact');
+                }
+              }}
               className="font-mono text-[0.9rem] uppercase text-white no-underline transition-colors duration-300 hover:text-cyber-red"
             >
               {label}
@@ -59,7 +67,13 @@ const Nav = () => {
             <li key={href}>
               <a 
                 href={href}
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => {
+                  setIsOpen(false);
+                  if (href === '/contact') {
+                    e.preventDefault();
+                    router.push('/contact');
+                  }
+                }}
                 className="block px-10 py-4 font-mono text-[0.9rem] uppercase text-white no-underline transition-colors duration-300 hover:text-cyber-red border-b border-cyber-red/20"
               >
                 {label}

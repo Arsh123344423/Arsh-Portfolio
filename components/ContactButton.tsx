@@ -26,9 +26,8 @@ export default function ContactButton() {
           outlineOffset: '-3px',
         }}
         onClick={() => {
-          // Add your action here
-           router.push('/contact')}
-        }
+          router.push('/contact');
+        }}
       >
         Contact Me
       </button>
