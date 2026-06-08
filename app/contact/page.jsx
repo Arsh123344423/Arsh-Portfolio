@@ -53,7 +53,7 @@ export default function ContactPage() {
 
   return (
     <motion.main
-      className="h-screen w-full bg-black text-white flex flex-col overflow-hidden relative"
+      className="min-h-screen w-full bg-black text-white flex flex-col overflow-hidden relative"
       initial={{ x: '100%' }}
       animate={{ x: 0 }}
       transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
@@ -74,7 +74,7 @@ export default function ContactPage() {
               transition={{ duration: 0.5 }}
               className="flex items-center gap-4"
             >
-              <div className="w-5 h-5 border-2 border-[#ff003c] border-t-transparent rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 h-full border-[#ff003c] border-t-transparent rounded-full animate-spin" />
               <span className="font-mono uppercase tracking-[0.2em] text-sm text-white/80">
                 Opening Contact Me
               </span>
@@ -84,7 +84,7 @@ export default function ContactPage() {
           /* ── Actual Contact Content ── */
           <motion.div 
             key="content"
-            className="absolute inset-0 flex flex-col"
+            className="absolute inset-0 flex h-full flex-col"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -138,8 +138,8 @@ export default function ContactPage() {
             </div>
 
             {/* ── Main content ── */}
-            <div className="relative z-10 flex-1 flex flex-col justify-center items-center px-6 sm:px-10 md:px-16 h-full min-h-0 overflow-y-auto">
-              <div className="flex flex-col items-center justify-center min-h-full w-full py-20">
+            <div className="relative z-10 flex-1 flex flex-col justify-center items-center px-6 sm:px-10 md:px-16 h-screen overflow-y-auto">
+              <div className="flex flex-col items-center justify-center min-h-screen w-full py-20">
                 {/* Tagline */}
                 <p
                   className="font-mono text-xs sm:text-sm uppercase tracking-[0.35em] text-[#ff003c]/70 mb-4 sm:mb-5 animate-slide-in-up"
