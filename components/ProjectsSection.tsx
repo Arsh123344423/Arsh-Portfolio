@@ -1,7 +1,9 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+"use client";
+
+import React from 'react';
 import FadeIn from './FadeIn';
 import LiveProjectButton from './LiveProjectButton';
+import ScrollStack, { ScrollStackItem } from './ScrollStack'; // Ensure this path is correct
 
 const projects = [
   {
@@ -31,124 +33,73 @@ const projects = [
     col2Img: './image.png',
     link: 'https://kalakatha-frontend-test.vercel.app/',
   },
-  
 ];
 
-function ProjectCard({
-  project,
-  index,
-  totalCards,
-}: {
-  project: (typeof projects)[0];
-  index: number;
-  totalCards: number;
-}) {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start 90%', 'start 20%'],
-  });
-
-  const y = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [120, 0]
-  );
-
-  const targetScale = 1 - index * 0.05;
-
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    // [1, 1, targetScale]
-    [0.9, 0.95, 1]
-  );
-
+function ProjectCard({ project }: { project: (typeof projects)[0] }) {
   return (
-    <div
-      ref={containerRef}
-      className="relative h-screen "
-      style={{
-        marginTop: index === 0 ? 0 : '-80vh',
-        zIndex: index + 1,
-      }}
+    <ScrollStackItem 
+      // Overriding the default 'h-80' and 'p-12' from your ScrollStackItem 
+      // to maintain your original design dimensions.
+      itemClassName="bg-dark border-2 border-[#D7E2EA] !h-auto !p-6 sm:!p-8 md:!p-10"
     >
-      <motion.div
-        className="
-          sticky top-24 md:top-28
-          rounded-[40px] sm:rounded-[50px] md:rounded-[60px]
-          border-2 border-[#D7E2EA]
-          bg-dark
-          p-6 sm:p-8 md:p-10
-          overflow-hidden
-        "
-        style={{
-          scale,
-          transformOrigin: 'top center',
-          marginTop: `${index * 30}px`,
-          y,
-        }}
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between mb-40 bg-black px-50 md:px-50">
-          <div className="flex items-center gap-4 md:gap-8">
-            <span
-              className="font-black text-[#D7E2EA] leading-none"
-              style={{ fontSize: 'clamp(3rem,10vw,140px)' }}
-            >
-              {project.num}
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6 sm:mb-8 md:mb-10 px-2 sm:px-4 md:px-6">
+        <div className="flex items-center gap-4 md:gap-8">
+          <span
+            className="font-black text-[#D7E2EA] leading-none"
+            style={{ fontSize: 'clamp(2.5rem,8vw,100px)' }}
+          >
+            {project.num}
+          </span>
+
+          <div className="flex flex-col">
+            <span className="text-[#D7E2EA] font-light uppercase tracking-wider text-sm md:text-base">
+              {project.category}
             </span>
 
-            <div className="flex flex-col">
-              <span className="text-[#D7E2EA] font-light uppercase tracking-wider text-sm md:text-base">
-                {project.category}
-              </span>
-
-              <span
-                className="text-[#D7E2EA] font-medium uppercase"
-                style={{ fontSize: 'clamp(1rem,2.2vw,2.1rem)' }}
-              >
-                {project.name}
-              </span>
-            </div>
+            <span
+              className="text-[#D7E2EA] font-medium uppercase"
+              style={{ fontSize: 'clamp(1rem,2.2vw,2.1rem)' }}
+            >
+              {project.name}
+            </span>
           </div>
-        <div className="mr-10 md:mr-20 p-20">
+        </div>
+        <div>
           <LiveProjectButton link={project.link} />
         </div>
+      </div>
+
+      {/* Images */}
+      <div className="flex gap-3 md:gap-4">
+        <div className="w-[40%] flex flex-col gap-3 md:gap-4">
+          <img
+            src={project.col1Img1}
+            alt={project.name}
+            className="w-full object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]"
+            style={{ height: 'clamp(130px,16vw,230px)' }}
+            loading="lazy"
+          />
+
+          <img
+            src={project.col1Img2}
+            alt={project.name}
+            className="w-full object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]"
+            style={{ height: 'clamp(160px,22vw,340px)' }}
+            loading="lazy"
+          />
         </div>
 
-        {/* Images */}
-        <div className="flex gap-3 md:gap-4 bg-black">
-          <div className="w-[40%] flex flex-col gap-3 md:gap-4 bg-black">
-            <img
-              src={project.col1Img1}
-              alt={project.name}
-              className="w-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
-              style={{ height: 'clamp(130px,16vw,230px)' }}
-              loading="lazy"
-            />
-
-            <img
-              src={project.col1Img2}
-              alt={project.name}
-              className="w-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
-              style={{ height: 'clamp(160px,22vw,340px)' }}
-              loading="lazy"
-            />
-          </div>
-
-          <div className="w-[60%] bg-black">
-            <img
-              src={project.col2Img}
-              alt={project.name}
-              className="w-full h-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
-              loading="lazy"
-            />
-          </div>
+        <div className="w-[60%]">
+          <img
+            src={project.col2Img}
+            alt={project.name}
+            className="w-full h-full object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]"
+            loading="lazy"
+          />
         </div>
-      </motion.div>
-    </div>
+      </div>
+    </ScrollStackItem>
   );
 }
 
@@ -168,7 +119,7 @@ export default function ProjectsSection() {
     >
       <FadeIn delay={0} y={40}>
         <h2
-          className="hero-heading font-black uppercase leading-none tracking-tight text-center"
+          className="hero-heading font-black uppercase leading-none tracking-tight text-center pt-20"
           style={{ fontSize: 'clamp(3rem,12vw,160px)' }}
         >
           Project
@@ -176,14 +127,15 @@ export default function ProjectsSection() {
       </FadeIn>
 
       <div className="relative mt-16 sm:mt-20 md:mt-28 bg-dark">
-        {projects.map((project, i) => (
-          <ProjectCard
-            key={project.num}
-            project={project}
-            index={i}
-            totalCards={projects.length}
-          />
-        ))}
+        {/* IMPORTANT: useWindowScroll={true} allows the stack to respond to the whole page scrolling, rather than containing it to a nested box */}
+        <ScrollStack useWindowScroll={true}>
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.num}
+              project={project}
+            />
+          ))}
+        </ScrollStack>
       </div>
     </section>
   );
