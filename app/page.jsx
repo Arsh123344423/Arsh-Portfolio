@@ -1,7 +1,6 @@
 'use client';
 
 import Loader from '@/components/Loader';
-import './home/index.css';
 
 /**
  * Root landing page — renders the anime.js powered Loader.
