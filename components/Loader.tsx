@@ -119,7 +119,7 @@ const DEFAULT_DATA: PortfolioData = {
     ],
     currently: 'Currently building AI-native tooling and experimenting with real-time 3D interfaces.',
     initials: 'AS',
-    photoSrc: '/Arsh Image.png',
+    photoSrc: '/Arsh Image.PNG',
     ringText: 'AVAILABLE FOR WORK  ✦  ARSH SRIVASTAVA  ✦  AVAILABLE FOR WORK  ✦  ARSH SRIVASTAVA  ✦  ',
   },
   capabilities: [
