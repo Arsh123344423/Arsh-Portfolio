@@ -41,6 +41,8 @@ export interface Stat {
   value: string;
   suffix?: string;
   label: string;
+  /** Optional one-line context, revealed on hover/focus — what the number actually means */
+  note?: string;
 }
 
 export interface AboutFact {
@@ -117,7 +119,7 @@ const DEFAULT_DATA: PortfolioData = {
     ],
     currently: 'Currently building AI-native tooling and experimenting with real-time 3D interfaces.',
     initials: 'AS',
-    // photoSrc: '/images/arsh.jpg', // ← add your photo here; falls back to initials until you do
+    photoSrc: '/Arsh Image.png',
     ringText: 'AVAILABLE FOR WORK  ✦  ARSH SRIVASTAVA  ✦  AVAILABLE FOR WORK  ✦  ARSH SRIVASTAVA  ✦  ',
   },
   capabilities: [
@@ -185,10 +187,10 @@ const DEFAULT_DATA: PortfolioData = {
     },
   ],
   stats: [
-    { id: 's1', value: '4', suffix: '+', label: 'Years Building' },
-    { id: 's2', value: '20', suffix: '+', label: 'Products Shipped' },
-    { id: 's3', value: '8', label: 'AI-Native Products' },
-    { id: 's4', value: '100', suffix: '%', label: 'Design-to-Code Handoff' },
+    { id: 's1', value: '4', suffix: '+', label: 'Years Building', note: 'From first line of code to shipped, maintained products.' },
+    { id: 's2', value: '20', suffix: '+', label: 'Products Shipped', note: 'Across web, mobile, and embedded 3D contexts.' },
+    { id: 's3', value: '8', label: 'AI-Native Products', note: 'AI woven into the architecture, never bolted on after.' },
+    { id: 's4', value: '100', suffix: '%', label: 'Design-to-Code Handoff', note: 'Every pixel and token accounted for in the build.' },
   ],
   socials: [
     { label: 'Twitter', href: '#' },
@@ -267,16 +269,30 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
   const [scrolled, setScrolled] = useState(false);
 
   const heroLineRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const eyebrowRef = useRef<HTMLSpanElement>(null);
+
   const heroSubRef = useRef<HTMLParagraphElement>(null);
   const heroActionsRef = useRef<HTMLDivElement>(null);
-  const flowPathRef = useRef<SVGPathElement>(null);
-  const flowPath2Ref = useRef<SVGPathElement>(null);
+  const spotlightRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
   const disciplineRefs = useRef<(HTMLDivElement | null)[]>([]);
   const revealRefs = useRef<HTMLElement[]>([]);
 
+  const proofGridRef = useRef<HTMLDivElement>(null);
+  const proofValueRefs = useRef<(HTMLSpanElement | null)[]>([]);
+
   const registerReveal = useCallback((el: HTMLElement | null) => {
     if (el && !revealRefs.current.includes(el)) revealRefs.current.push(el);
+  }, []);
+
+  /* ── Hero spotlight follows the cursor within the hero bounds ── */
+  const handleHeroMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const el = spotlightRef.current;
+    if (!el) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    el.style.setProperty('--sx', `${x}%`);
+    el.style.setProperty('--sy', `${y}%`);
   }, []);
 
   /* ── Scroll listener for nav chrome ── */
@@ -286,21 +302,81 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  /* ── Custom tracking cursor, page-wide ──
+     mix-blend-mode: difference on a plain HTML element (not nested in an
+     <svg> — that's what makes it work) blends the dot's paper color against
+     whatever's directly beneath it: light over the dark ink chambers, and
+     it flips to near-black on its own over the light stone chambers. No
+     manual "which section am I over" tracking needed. Fine-pointer devices
+     only, and falls back to an instant (non-lerped) follow under
+     prefers-reduced-motion. */
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    const cursor = cursorRef.current;
+    if (!cursor) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
+    let rafId = 0;
+    let visible = false;
+
+    const showCursor = () => {
+      if (visible) return;
+      visible = true;
+      cursor.style.opacity = '1';
+    };
+    const hideCursor = () => {
+      visible = false;
+      cursor.style.opacity = '0';
+    };
+
+    const onMove = (e: MouseEvent) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      showCursor();
+    };
+
+    const onOverInteractive = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      const interactive = Boolean(target?.closest('a, button, [role="button"]'));
+      cursor.classList.toggle('pf-cursor--active', interactive);
+    };
+
+    const tick = () => {
+      const ease = reduceMotion ? 1 : 0.2;
+      currentX += (targetX - currentX) * ease;
+      currentY += (targetY - currentY) * ease;
+      cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`;
+      rafId = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener('mousemove', onMove, { passive: true });
+    window.addEventListener('mouseover', onOverInteractive, { passive: true });
+    document.addEventListener('mouseleave', hideCursor);
+    document.body.classList.add('pf-cursor-enabled');
+    rafId = requestAnimationFrame(tick);
+
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseover', onOverInteractive);
+      document.removeEventListener('mouseleave', hideCursor);
+      document.body.classList.remove('pf-cursor-enabled');
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+
   /* ── Hero load sequence + scroll-reveal wiring ── */
   useEffect(() => {
     let cancelled = false;
 
     import('animejs').then(({ default: anime }) => {
       if (cancelled) return;
-
-      anime({
-        targets: eyebrowRef.current,
-        opacity: [0, 1],
-        translateY: [-10, 0],
-        duration: 700,
-        delay: 150,
-        easing: 'easeOutQuart',
-      });
 
       anime({
         targets: heroLineRefs.current.filter(Boolean),
@@ -327,15 +403,6 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
         duration: 800,
         delay: 1100,
         easing: 'easeOutQuart',
-      });
-
-      anime({
-        targets: [flowPathRef.current, flowPath2Ref.current].filter(Boolean),
-        strokeDashoffset: [anime.setDashoffset, 0],
-        opacity: [0, 1],
-        duration: 1600,
-        delay: anime.stagger(200, { start: 400 }),
-        easing: 'easeInOutSine',
       });
 
       anime({
@@ -378,8 +445,74 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
     };
   }, []);
 
+  /* ── Proof strip: numbers count up from zero once the strip enters view ──
+     A quiet nod to the "systems / real-time" thread running through the
+     work section — the one place on the page where a number is caught
+     mid-motion instead of sitting static. Respects reduced-motion by
+     writing the final value immediately with no animation. */
+  useEffect(() => {
+    let cancelled = false;
+    const gridEl = proofGridRef.current;
+    if (!gridEl) return;
+
+    const reduceMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const runCount = () => {
+      import('animejs').then(({ default: anime }) => {
+        if (cancelled) return;
+        d.stats.forEach((s, i) => {
+          const el = proofValueRefs.current[i];
+          if (!el) return;
+          const target = parseFloat(s.value);
+          if (Number.isNaN(target)) {
+            el.textContent = s.value;
+            return;
+          }
+          if (reduceMotion) {
+            el.textContent = s.value;
+            return;
+          }
+          const counter = { val: 0 };
+          anime({
+            targets: counter,
+            val: target,
+            round: 1,
+            duration: 1300,
+            delay: i * 90,
+            easing: 'easeOutCubic',
+            update: () => {
+              el.textContent = String(counter.val);
+            },
+          });
+        });
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            runCount();
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(gridEl);
+
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [d.stats]);
+
   return (
     <div style={{ background: 'var(--ink)', color: 'var(--paper)' }}>
+      <div ref={cursorRef} className="pf-cursor" aria-hidden />
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -416,6 +549,26 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
           border-radius: 4px;
         }
 
+        /* ── custom tracking cursor ── */
+        .pf-cursor {
+          position: fixed; top: 0; left: 0;
+          width: 60px; height: 60px; border-radius: 50%;
+          background: var(--paper);
+          mix-blend-mode: difference;
+          pointer-events: none;
+          z-index: 9999;
+          opacity: 0;
+          transition: opacity 0.2s ease, width 0.25s ease, height 0.25s ease;
+          will-change: transform;
+        }
+        .pf-cursor--active { width: 42px; height: 42px; }
+
+        @media (hover: hover) and (pointer: fine) {
+          body.pf-cursor-enabled,
+          body.pf-cursor-enabled a,
+          body.pf-cursor-enabled button { cursor: none; }
+        }
+
         @media (prefers-reduced-motion: reduce) {
           * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
           html { scroll-behavior: auto; }
@@ -428,10 +581,10 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
           padding: 22px 32px;
           background: rgba(21, 19, 15, 0.7);
           backdrop-filter: blur(14px);
-          border-bottom: 1px solid transparent;
-          transition: border-color 0.3s ease, background 0.3s ease;
+          border-bottom: 1px solid rgba(243, 236, 223, 0.14);
+          transition: background 0.3s ease;
         }
-        .pf-nav.scrolled { border-bottom-color: rgba(243, 236, 223, 0.14); background: rgba(21, 19, 15, 0.92); }
+        .pf-nav.scrolled { background: rgba(21, 19, 15, 0.92); }
         .pf-mark { display: flex; align-items: center; gap: 10px; font-family: 'Fraunces', serif; font-weight: 500; font-size: 17px; color: var(--paper); }
         .pf-mark .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ember); }
         .pf-links { display: flex; align-items: center; gap: 34px; }
@@ -446,33 +599,53 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
         @media (max-width: 860px) { .pf-links { display: none; } }
 
         /* ── hero (ink chamber) ── */
-        .pf-hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 150px 0 90px; overflow: hidden; }
-        .pf-eyebrow {
-          display: inline-flex; align-items: center; gap: 8px; opacity: 0;
-          padding: 7px 16px; border: 2px solid rgba(227, 168, 116, 0.45); border-radius: 999px;
-          background: var(--ember-soft); color: var(--ember); font-size: 10px;
+        .pf-hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 115px 0 90px; overflow: hidden; }
+
+        /* Precision grid, faded toward the edges — quiet technical texture behind the headline */
+        .pf-hero-grid {
+          position: absolute; inset: 0; z-index: 0; pointer-events: none;
+          background-image:
+            linear-gradient(to right, rgba(243, 236, 223, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(243, 236, 223, 0.05) 1px, transparent 1px);
+          background-size: 56px 56px;
+          -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 38%, black 35%, transparent 82%);
+          mask-image: radial-gradient(ellipse 65% 55% at 50% 38%, black 35%, transparent 82%);
         }
-        .pf-hero h1 { font-size: clamp(3rem, 8vw, 7.2rem); margin-top: 28px; max-width: 17ch; color: var(--paper); }
+
+        /* Soft glow that tracks the cursor within the hero — the section's one signature move */
+        .pf-hero-spotlight {
+          position: absolute; inset: 0; z-index: 0; pointer-events: none;
+          --sx: 50%; --sy: 38%;
+          background: radial-gradient(560px circle at var(--sx) var(--sy), rgba(227, 168, 116, 0.14), transparent 45%);
+        }
+        @media (max-width: 760px) { .pf-hero-spotlight { background: radial-gradient(420px circle at 50% 30%, rgba(227, 168, 116, 0.12), transparent 45%); } }
+
+        .pf-hero h1 { position: relative; z-index: 2; font-size: clamp(3rem, 8vw, 7.2rem); max-width: 17ch; color: var(--paper); }
         .pf-hero h1 .pf-line { display: block; overflow: hidden; }
         .pf-hero h1 .pf-line span { display: inline-block; transform: translateY(100%); opacity: 0; }
         .pf-hero h1 em { font-style: italic; color: var(--ember); }
-        .pf-hero-sub { margin-top: 30px; max-width: 46ch; font-size: 18px; line-height: 1.7; color: var(--muted-on-ink); opacity: 0; }
-        .pf-hero-actions { display: flex; gap: 14px; margin-top: 42px; flex-wrap: wrap; opacity: 0; }
+        .pf-hero-sub { position: relative; z-index: 2; margin-top: 30px; max-width: 46ch; font-size: 18px; line-height: 1.7; color: var(--muted-on-ink); opacity: 0; }
+        .pf-hero-actions { position: relative; z-index: 2; display: flex; gap: 14px; margin-top: 42px; flex-wrap: wrap; opacity: 0; }
 
-        .pf-btn { font-size: 12px; letter-spacing: 0.06em; padding: 16px 30px; border-radius: 999px; cursor: pointer; transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
-        .pf-btn-solid { background: var(--ember); color: var(--ink); border: 2px solid var(--ember); }
+        .pf-btn { font-size: 12px; letter-spacing: 0.06em; padding: 15px 28px; border-radius: 999px; transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
+        .pf-btn-solid { background: var(--ember); color: var(--ink); border: 1px solid var(--ember); }
         .pf-btn-solid:hover { transform: translateY(-2px); }
-        .pf-btn-ghost { border: 2px solid rgba(243, 236, 223, 0.3); color: var(--paper); }
-        .pf-btn-ghost:hover { border-color: var(--ember); color: var(--ember); }
+        .pf-btn-ghost { border: 1px solid rgba(243, 236, 223, 0.18); color: var(--paper); background: rgba(243, 236, 223, 0.02); }
+        .pf-btn-ghost:hover { border-color: rgba(227, 168, 116, 0.55); color: var(--ember); background: rgba(227, 168, 116, 0.06); }
 
-        .pf-hero-meta { position: absolute; bottom: 40px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 32px; }
-        .pf-scroll-cue { display: flex; align-items: center; gap: 10px; font-size: 10px; color: var(--muted-on-ink); }
-        .pf-scroll-cue .bar { width: 1px; height: 34px; background: linear-gradient(to bottom, var(--ember), transparent); }
+        .pf-hero-meta { position: absolute; z-index: 2; bottom: 40px; left: 0; right: 0; padding: 0 32px; display: flex; justify-content: space-between; }
+        .pf-scroll-cue { display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--muted-on-ink); }
+        .pf-scroll-chevron { display: inline-flex; color: var(--ember); animation: pf-chevron-bounce 1.6s ease-in-out infinite; }
+        @keyframes pf-chevron-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
         @media (max-width: 640px) { .pf-hero-meta { display: none; } }
 
-        .pf-discipline { position: absolute; display: flex; align-items: center; gap: 8px; opacity: 0; font-size: 11px; padding: 6px 12px; border: 1px solid rgba(243, 236, 223, 0.2); border-radius: 999px; }
+        .pf-discipline {
+          position: absolute; z-index: 1; display: flex; align-items: center; gap: 8px; opacity: 0;
+          font-size: 10.5px; padding: 7px 13px; border: 1px solid rgba(243, 236, 223, 0.14); border-radius: 999px;
+          background: rgba(243, 236, 223, 0.03); backdrop-filter: blur(6px);
+        }
         .pf-discipline .pip { width: 5px; height: 5px; border-radius: 50%; background: var(--ember); }
-        .pf-discipline span.lbl { color: rgba(243, 236, 223, 0.75); }
+        .pf-discipline span.lbl { color: rgba(243, 236, 223, 0.7); }
         @media (max-width: 760px) { .pf-discipline { display: none; } }
 
         /* ── marquee (stone chamber) ── */
@@ -546,7 +719,7 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
         /* ── work grid (ink chamber, big radius cards) ── */
         .pf-work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
         @media (max-width: 780px) { .pf-work-grid { grid-template-columns: 1fr; } }
-        .pf-work-card { border-radius: 48px; overflow: hidden; border: 2px solid rgba(243, 236, 223, 0.25); opacity: 0; cursor: pointer; }
+        .pf-work-card { border-radius: 48px; overflow: hidden; border: 2px solid rgba(243, 236, 223, 0.25); opacity: 0;}
         .pf-work-thumb { height: 260px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 26px; }
         .pf-work-thumb::before { content: ''; position: absolute; inset: 0; transition: transform 0.7s cubic-bezier(.16,1,.3,1); }
         .pf-work-card:hover .pf-work-thumb::before { transform: scale(1.06); }
@@ -562,14 +735,73 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
         .pf-work-link { font-size: 11px; color: var(--ember); transition: opacity 0.25s ease; }
         .pf-work-link:hover { opacity: 0.7; }
 
-        /* ── proof strip (stone chamber) ── */
-        .pf-proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+        /* ── proof strip (stone chamber) ──
+           Signature move: each figure counts up from zero the first time the
+           strip enters view (a quiet echo of the "real-time systems" thread
+           running through the work section), and hovering a cell reveals the
+           one line of context that number actually stands for. Dividers are
+           drawn with a single 1px grid gap over an ink background instead of
+           per-cell borders, so every seam renders at exactly the same weight
+           regardless of column rounding. */
+        .pf-proof-section { padding: 0; }
+        /* Border-collapse technique: every cell gets a full 1px border, then is
+           pulled up/left by exactly that width so its border lands precisely on
+           top of its neighbor's — one shared 1px line instead of two stacked
+           ones. The grid is nudged down/right by the same amount so the very
+           first cell isn't shifted out of position. This is deliberately pure
+           borders (no gap+background mixing) so there's only ever one seam-
+           drawing mechanism, and no dependency on how the fractional 1fr
+           columns round — the fix always lands, at any width or zoom level. */
+        .pf-proof-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          background: var(--ink);
+          padding: 1px 0 0 1px;
+        }
         @media (max-width: 780px) { .pf-proof-grid { grid-template-columns: repeat(2, 1fr); } }
-        .pf-proof-cell { padding: 48px 30px; border-left: 2px solid var(--ink); opacity: 0; }
-        .pf-proof-cell:first-child { border-left: none; }
-        .pf-proof-num { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(2rem, 4vw, 3rem); }
+        @media (max-width: 400px) { .pf-proof-grid { grid-template-columns: 1fr; } }
+
+        .pf-proof-cell {
+          position: relative;
+          padding: 52px 32px 44px;
+          background: var(--stone-2);
+          border: 1px solid var(--ink);
+          margin: -1px 0 0 -1px;
+          opacity: 0;
+          overflow: hidden;
+          transition: background 0.35s ease;
+        }
+        .pf-proof-cell::before {
+          content: '';
+          position: absolute;
+          left: 0; top: 0; bottom: 0;
+          width: 3px;
+          background: var(--ember);
+          transform: scaleY(0);
+          transform-origin: bottom;
+          transition: transform 0.45s cubic-bezier(.16,1,.3,1);
+        }
+        .pf-proof-cell:hover,
+        .pf-proof-cell:focus-within { background: #fff; z-index: 2; }
+        .pf-proof-cell:hover::before,
+        .pf-proof-cell:focus-within::before { transform: scaleY(1); }
+
+        .pf-proof-num {
+          display: flex; align-items: baseline;
+          font-family: 'Fraunces', serif; font-weight: 500;
+          font-size: clamp(2.1rem, 4vw, 3.1rem);
+          font-variant-numeric: tabular-nums;
+        }
         .pf-proof-num .accent { color: var(--ember); font-style: italic; }
-        .pf-proof-label { margin-top: 8px; font-size: 11px; color: var(--muted-on-stone); font-family: 'JetBrains Mono'; text-transform: uppercase; letter-spacing: 0.1em; }
+        .pf-proof-label { margin-top: 10px; font-size: 11px; color: var(--muted-on-stone); font-family: 'JetBrains Mono'; text-transform: uppercase; letter-spacing: 0.1em; }
+        .pf-proof-note {
+          font-size: 12.5px; line-height: 1.55; color: var(--muted-on-stone);
+          max-height: 0; margin-top: 0; opacity: 0;
+          overflow: hidden;
+          transition: max-height 0.35s ease, margin-top 0.35s ease, opacity 0.3s ease;
+        }
+        .pf-proof-cell:hover .pf-proof-note,
+        .pf-proof-cell:focus-within .pf-proof-note { max-height: 80px; margin-top: 12px; opacity: 0.9; }
 
         /* ── CTA (ink chamber) ── */
         .pf-cta { text-align: center; padding: 160px 0; }
@@ -594,7 +826,6 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
           .pf-nav-cta { padding: 8px 14px; font-size: 10px; }
 
           .pf-hero { padding: 96px 0 48px; min-height: auto; }
-          .pf-eyebrow { padding: 5px 12px; font-size: 9px; }
           .pf-hero h1 { font-size: clamp(2.15rem, 10.5vw, 3rem); margin-top: 18px; max-width: 13ch; }
           .pf-hero-sub { margin-top: 16px; font-size: 14.5px; line-height: 1.6; }
           .pf-hero-actions { margin-top: 26px; gap: 10px; }
@@ -631,9 +862,12 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
           .pf-work-info h3 { font-size: 17px; }
           .pf-work-desc { font-size: 13px; margin: 10px 0 14px; }
 
-          .pf-proof-cell { padding: 26px 16px; }
-          .pf-proof-num { font-size: 1.7rem; }
+          .pf-proof-cell { padding: 28px 20px 24px; }
+          .pf-proof-num { font-size: 1.9rem; }
           .pf-proof-label { font-size: 9.5px; margin-top: 6px; }
+          .pf-proof-note { font-size: 11.5px; }
+          .pf-proof-cell:hover .pf-proof-note,
+          .pf-proof-cell:focus-within .pf-proof-note { max-height: 100px; margin-top: 8px; }
 
           .pf-cta { padding: 68px 0; }
           .pf-cta h2 { font-size: clamp(1.8rem, 9vw, 2.6rem); }
@@ -648,9 +882,6 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
         @media (max-width: 400px) {
           .wrap { padding: 0 16px; }
           .pf-hero h1 { font-size: clamp(1.9rem, 11vw, 2.6rem); }
-          .pf-proof-grid { grid-template-columns: 1fr; }
-          .pf-proof-cell { border-left: none; border-top: 2px solid var(--ink); }
-          .pf-proof-cell:first-child { border-top: none; }
         }
       `}</style>
 
@@ -666,37 +897,16 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
       </nav>
 
       {/* ── HERO ── */}
-      <section className="pf-hero">
-        <svg
-          aria-hidden
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 0 }}
-          viewBox="0 0 1600 900"
-          preserveAspectRatio="none"
-        >
-          <path
-            ref={flowPathRef}
-            d="M -40 250 C 340 250 440 470 800 470 C 1160 470 1260 250 1640 250"
-            stroke="#e3a874"
-            strokeOpacity={0.35}
-            strokeWidth={1.5}
-            fill="none"
-          />
-          <path
-            ref={flowPath2Ref}
-            d="M -40 650 C 340 650 440 470 800 470 C 1160 470 1260 650 1640 650"
-            stroke="#e3a874"
-            strokeOpacity={0.35}
-            strokeWidth={1.5}
-            fill="none"
-          />
-        </svg>
+      <section className="pf-hero" onMouseMove={handleHeroMouseMove}>
+        <div className="pf-hero-grid" aria-hidden />
+        <div ref={spotlightRef} className="pf-hero-spotlight" aria-hidden />
 
         {d.disciplines.map((label, i) => {
           const positions = [
-            { top: '24%', left: '6%' },
-            { top: '24%', right: '6%' },
-            { bottom: '20%', left: '5%' },
-            { bottom: '20%', right: '5%' },
+            { top: '22%', left: '6%' },
+            { top: '22%', right: '6%' },
+            { bottom: '18%', left: '5%' },
+            { bottom: '18%', right: '5%' },
           ];
           const pos = positions[i % positions.length];
           return (
@@ -713,7 +923,6 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
         })}
 
         <div className="wrap" style={{ position: 'relative', zIndex: 2 }}>
-          <span ref={eyebrowRef} className="pf-eyebrow mono">✦ {d.role}</span>
           <h1 className="serif">
             {d.heroLines.map((line, i) => (
               <span className="pf-line" key={i}>
@@ -738,7 +947,14 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
         </div>
 
         <div className="pf-hero-meta mono">
-          <div className="pf-scroll-cue"><div className="bar" />Scroll</div>
+          <div className="pf-scroll-cue">
+            <span className="pf-scroll-chevron" aria-hidden>
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                <path d="M2 5l5 5 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+            Scroll
+          </div>
           <div className="pf-scroll-cue" style={{ textAlign: 'right' }}>{d.location}</div>
         </div>
       </section>
@@ -871,17 +1087,20 @@ export default function Portfolio({ data }: PortfolioProps): JSX.Element {
         </div>
       </section>
 
-      {/* ── PROOF STRIP ── */}
-      <div className="pf-section-stone" style={{ padding: 0 }}>
+      {/* ── PROOF STRIP ──
+          Each figure counts up on first view; hover or focus a cell to read
+          the one line of context behind the number. */}
+      <div className="pf-section-stone pf-proof-section">
         <div className="wrap">
-          <div className="pf-proof-grid">
-            {d.stats.map((s) => (
-              <div className="pf-proof-cell" key={s.id} ref={registerReveal}>
+          <div className="pf-proof-grid" ref={proofGridRef}>
+            {d.stats.map((s, i) => (
+              <div className="pf-proof-cell" key={s.id} ref={registerReveal} tabIndex={0}>
                 <div className="pf-proof-num">
-                  {s.value}
+                  <span ref={(el) => { proofValueRefs.current[i] = el; }}>0</span>
                   {s.suffix && <span className="accent">{s.suffix}</span>}
                 </div>
-                <div className="pf-proof-label">{s.label}</div>
+                <div className="pf-proof-label mono">{s.label}</div>
+                {s.note && <div className="pf-proof-note">{s.note}</div>}
               </div>
             ))}
           </div>
