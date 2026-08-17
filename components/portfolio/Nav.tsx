@@ -13,7 +13,7 @@ interface NavProps {
 export function Nav({ name, navLinks, scrolled }: NavProps): JSX.Element {
   return (
     <nav className={`pf-nav mono${scrolled ? ' scrolled' : ''}`}>
-      <div className="pf-mark"><span className="dot" />{name}</div>
+      <a href="#hero" className="pf-mark"><span className="dot" />{name}</a>
       <div className="pf-links mono">
         {navLinks.map((l) => (
           <a key={l.href} href={l.href}>{l.label}</a>

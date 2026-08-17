@@ -19,7 +19,7 @@ export function Capabilities({ capabilities, registerReveal }: CapabilitiesProps
             <span className="pf-section-eyebrow mono">Capabilities deck</span>
             <h2 className="pf-section-title serif">What I bring to the table</h2>
           </div>
-          <p className="pf-section-note">Six disciplines, one continuous process — from the first sketch to the shipped build.</p>
+          <p className="pf-section-note">Six disciplines, one continuous process. From the first sketch to the shipped build.</p>
         </div>
 
         <div className="pf-deck">

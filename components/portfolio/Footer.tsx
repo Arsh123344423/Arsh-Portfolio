@@ -17,7 +17,7 @@ export function Footer({ name, socials }: FooterProps): JSX.Element {
         <div className="pf-footer-links">
           {socials.map((s) => <a key={s.label} href={s.href}>{s.label}</a>)}
         </div>
-        <a href='#about'>
+        <a href='#hero'>
           <span>Back to top ↑</span>
         </a>
       </div>

@@ -313,20 +313,482 @@ export function PortfolioStyles(): JSX.Element {
       .pf-footer-links { display: flex; gap: 26px; }
       .pf-footer-links a:hover { color: var(--moss); }
 
-      /* ══════════ MOBILE COMPACTION ══════════
-         Tightens padding, gaps, and type scale across every section so
-         the page reads as a proper phone layout instead of a shrunk
-         desktop one. */
+      /* ── Interactive 3D Hero & Glassmorphic Chatbot ── */
+      .pf-hero-interactive {
+        position: relative;
+        min-height: 100vh;
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        padding: 70px 0 20px;
+        box-sizing: border-box;
+      }
+
+      .pf-hero-interactive h1,
+      .pf-hero-title-diff {
+        font-size: clamp(1.95rem, 3.1vw, 3.1rem) !important;
+        line-height: 1.05;
+        max-width: 14ch;
+        mix-blend-mode: difference;
+      }
+
+      .pf-hero-interactive h1 em,
+      .pf-hero-title-diff em {
+        font-style: normal;
+        color: inherit !important;
+      }
+
+      .pf-hero-interactive .pf-hero-sub,
+      .pf-hero-sub-diff {
+        margin-top: 12px;
+        font-size: 13.5px;
+        line-height: 1.5;
+        max-width: 40ch;
+        mix-blend-mode: difference;
+        opacity: 0.9;
+      }
+
+      .pf-hero-interactive .pf-hero-actions {
+        margin-top: 18px;
+        gap: 10px;
+      }
+
+      .pf-hero-interactive .pf-btn {
+        padding: 9px 20px;
+        font-size: 10.5px;
+      }
+
+      /* orb no longer needs its own explicit z-index — DOM order now controls layering */
+      .pf-orb-bg-wrap {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* z-index: 1;  ← remove this line */
+      }
+
+      .pf-orb-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      /* NEW — this becomes the single shared blend context */
+      .pf-hero-blend-stage {
+        position: absolute;
+        inset: 0;
+        z-index: 2; /* sits above grid(0)/spotlight(0)/discipline(1), below hero-met  a */
+        display: flex;
+        align-items: center;
+        pointer-events: none;
+      }
+      .pf-hero-blend-stage > .pf-hero-content-wrap {
+        pointer-events: auto;
+        width: 100%;
+      }
+
+      .pf-hero-content-wrap {
+        position: relative;
+        /* z-index: 3;  ← remove this line */
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+        align-items: center;
+        width: 100%;
+        padding: 0;
+      }
+
+      .pf-hero-header-block {
+        position: relative;
+        /* z-index: 4;  ← remove this line */
+      }
+
+      .pf-hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        color: var(--ember);
+        background: rgba(227, 168, 116, 0.1);
+        border: 1px solid rgba(227, 168, 116, 0.28);
+        padding: 5px 12px;
+        border-radius: 999px;
+        margin-bottom: 12px;
+      }
+
+      .pf-hero-chat-wrapper {
+        position: relative;
+        z-index: 4;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .pf-hero-glass-chat-container {
+        background: rgba(18, 16, 14, 0.76);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(243, 236, 223, 0.16);
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 24px rgba(227, 168, 116, 0.08);
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: clamp(360px, 48vh, 440px);
+      }
+
+      .pf-hero-chat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 11px 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border-bottom: 1px solid rgba(243, 236, 223, 0.08);
+      }
+
+      .pf-hero-chat-status {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .pf-chat-status-pip {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #4ade80;
+        box-shadow: 0 0 10px #4ade80;
+        animation: pulse 2.5s infinite;
+      }
+
+      .pf-chat-status-text {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .pf-chat-title {
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--paper);
+        font-weight: 600;
+      }
+
+      .pf-chat-subtitle {
+        font-size: 10px;
+        color: var(--muted-on-ink);
+      }
+
+      .pf-chat-reset-btn {
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        padding: 4px 10px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(243, 236, 223, 0.14);
+        color: var(--muted-on-ink);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .pf-chat-reset-btn:hover {
+        background: rgba(227, 168, 116, 0.15);
+        color: var(--ember);
+        border-color: var(--ember);
+      }
+
+      .pf-hero-chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 14px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        scrollbar-width: none;
+      }
+
+      .pf-chat-msg-row {
+        display: flex;
+        width: 100%;
+      }
+
+      .pf-msg-user-row {
+        justify-content: flex-end;
+      }
+
+      .pf-msg-ai-row {
+        justify-content: flex-start;
+      }
+
+      .pf-chat-bubble {
+        max-width: 90%;
+        padding: 10px 14px;
+        border-radius: 14px;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .pf-bubble-user {
+        background: linear-gradient(135deg, rgba(227, 168, 116, 0.3), rgba(227, 168, 116, 0.15));
+        border: 1px solid rgba(227, 168, 116, 0.45);
+        color: var(--paper);
+        border-bottom-right-radius: 4px;
+      }
+
+      .pf-bubble-ai {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(243, 236, 223, 0.1);
+        color: var(--paper);
+        border-bottom-left-radius: 4px;
+      }
+
+      .pf-bubble-loading {
+        background: rgba(227, 168, 116, 0.08);
+        border: 1px dashed rgba(227, 168, 116, 0.4);
+      }
+
+      .pf-chat-time {
+        display: block;
+        font-size: 9.5px;
+        opacity: 0.55;
+        margin-top: 4px;
+        text-align: right;
+      }
+
+      .pf-chat-md strong {
+        color: var(--ember);
+        font-weight: 600;
+      }
+
+      .pf-chat-link {
+        color: var(--ember);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .pf-chat-bullet-row {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        margin: 3px 0;
+      }
+
+      .pf-chat-bullet-dot {
+        color: var(--ember);
+        font-size: 10px;
+        flex-shrink: 0;
+      }
+
+      .pf-chat-space {
+        height: 4px;
+      }
+
+      .pf-chat-suggestions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 0 16px 8px;
+      }
+
+      .pf-chat-chip {
+        font-size: 10px;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(243, 236, 223, 0.12);
+        color: var(--paper);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .pf-chat-chip:hover {
+        background: rgba(227, 168, 116, 0.2);
+        border-color: var(--ember);
+        color: var(--ember);
+      }
+
+      .pf-hero-chat-input-bar {
+        display: flex;
+        gap: 8px;
+        padding: 10px 14px;
+        background: rgba(0, 0, 0, 0.35);
+        border-top: 1px solid rgba(243, 236, 223, 0.08);
+      }
+
+      .pf-chat-input {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(243, 236, 223, 0.12);
+        border-radius: 10px;
+        padding: 8px 12px;
+        color: var(--paper);
+        font-size: 12.5px;
+        outline: none;
+        transition: border-color 0.2s ease;
+      }
+
+      .pf-chat-input:focus {
+        border-color: var(--ember);
+        box-shadow: 0 0 10px rgba(227, 168, 116, 0.25);
+      }
+
+      .pf-chat-send-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--ember);
+        color: var(--ink);
+        border: none;
+        border-radius: 10px;
+        padding: 0 14px;
+        font-size: 10.5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+      }
+
+      .pf-chat-send-btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .pf-chat-send-btn:not(:disabled):hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(227, 168, 116, 0.4);
+      }
+
+      /* ── Glassmorphic Loader Ball Animation ── */
+      .pf-glass-loader-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 4px 0;
+      }
+
+      .pf-glass-orb-loader {
+        position: relative;
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .pf-glass-orb-core {
+        position: relative;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, rgba(255, 236, 210, 0.95), rgba(227, 168, 116, 0.7) 40%, rgba(47, 74, 62, 0.4) 80%, rgba(21, 19, 15, 0.8) 100%);
+        box-shadow: 0 0 12px rgba(227, 168, 116, 0.6), inset 0 0 4px rgba(255, 255, 255, 0.8);
+        animation: orb-morph 2.4s ease-in-out infinite alternate;
+      }
+
+      .pf-glass-orb-glow {
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(227, 168, 116, 0.5) 0%, transparent 70%);
+        animation: orb-glow-pulse 2s ease-in-out infinite;
+      }
+
+      .pf-glass-loader-label {
+        font-size: 11px;
+        color: var(--ember);
+        letter-spacing: 0.08em;
+      }
+
+      @keyframes orb-morph {
+        0% {
+          transform: scale(0.92) rotate(0deg);
+          border-radius: 46% 54% 50% 50% / 52% 48% 52% 48%;
+        }
+        50% {
+          transform: scale(1.08) rotate(180deg);
+          border-radius: 54% 46% 52% 48% / 46% 54% 46% 54%;
+        }
+        100% {
+          transform: scale(0.96) rotate(360deg);
+          border-radius: 48% 52% 46% 54% / 54% 46% 50% 50%;
+        }
+      }
+
+      @keyframes orb-glow-pulse {
+        0%, 100% {
+          transform: scale(0.9);
+          opacity: 0.4;
+        }
+        50% {
+          transform: scale(1.25);
+          opacity: 0.85;
+        }
+      }
+
+      .pf-hero-interactive .pf-hero-meta {
+        position: absolute;
+        bottom: 12px;
+        left: 0;
+        right: 0;
+        padding: 0 32px;
+        display: flex;
+        justify-content: space-between;
+        z-index: 4;
+      }
+      @media (max-height: 720px) {
+        .pf-hero-interactive .pf-hero-meta {
+          display: none;
+        }
+      }
+
+      /* ══════════ MOBILE COMPACTION ══════════ */
+      @media (max-width: 960px) {
+        .pf-hero-interactive {
+          min-height: auto;
+          height: auto;
+          max-height: none;
+          padding: 100px 0 40px;
+        }
+        .pf-hero-content-wrap {
+          grid-template-columns: 1fr;
+          gap: 32px;
+          padding-top: 20px;
+        }
+        .pf-hero-header-block {
+          text-align: center;
+        }
+        .pf-hero-actions {
+          justify-content: center;
+        }
+        .pf-hero-chat-wrapper {
+          max-width: 100%;
+        }
+      }
+
       @media (max-width: 640px) {
         .pf-nav { padding: 14px 18px; }
         .pf-mark { font-size: 15px; }
         .pf-nav-cta { padding: 8px 14px; font-size: 10px; }
 
         .pf-hero { padding: 96px 0 48px; min-height: auto; }
+        .pf-hero-interactive { min-height: auto; padding: 100px 0 40px; }
         .pf-hero h1 { font-size: clamp(2.15rem, 10.5vw, 3rem); margin-top: 18px; max-width: 13ch; }
         .pf-hero-sub { margin-top: 16px; font-size: 14.5px; line-height: 1.6; }
         .pf-hero-actions { margin-top: 26px; gap: 10px; }
         .pf-btn { padding: 12px 20px; font-size: 10.5px; }
+
+        .pf-hero-glass-chat-container { height: 460px; border-radius: 20px; }
+        .pf-hero-chat-header { padding: 14px 16px; }
+        .pf-hero-chat-messages { padding: 14px 16px; }
+        .pf-chat-bubble { max-width: 94%; font-size: 12.5px; }
 
         .pf-marquee-section { padding: 14px 0; }
         .pf-marquee-track { gap: 30px; }
