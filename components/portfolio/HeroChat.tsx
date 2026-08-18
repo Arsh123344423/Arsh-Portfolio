@@ -75,6 +75,18 @@ function formatMarkdown(text: string): JSX.Element {
   );
 }
 
+/** Small "live" equalizer — reads as an active voice/AI agent rather than a static dot. */
+function ListeningIndicator(): JSX.Element {
+  return (
+    <span className="pf-waveform" aria-hidden="true">
+      <span />
+      <span />
+      <span />
+      <span />
+    </span>
+  );
+}
+
 export function HeroChat(): JSX.Element {
   const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
   const [input, setInput] = useState('');
@@ -149,7 +161,7 @@ export function HeroChat(): JSX.Element {
       {/* Top Glass Bar */}
       <div className="pf-hero-chat-header">
         <div className="pf-hero-chat-status">
-          <span className="pf-chat-status-pip" />
+          <ListeningIndicator />
           <div className="pf-chat-status-text">
             <span className="mono pf-chat-title">ARSH.AI // ASSISTANT</span>
             <span className="pf-chat-subtitle">Neural Portfolio Agent</span>
@@ -167,7 +179,7 @@ export function HeroChat(): JSX.Element {
       </div>
 
       {/* Messages Feed */}
-      <div className="pf-hero-chat-messages">
+      <div className="pf-hero-chat-messages" aria-live="polite" aria-relevant="additions">
         {messages.map((m) => (
           <div
             key={m.id}

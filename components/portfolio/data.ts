@@ -46,7 +46,7 @@ export const DEFAULT_DATA: PortfolioData = {
     { id: 'c3', number: '03', title: '3D & WebGL', description: 'Interactive Three.js scenes and product visualizations, optimized to actually run well on real devices.', tags: ['Three.js', 'R3F', 'elevenlabs'] },
     { id: 'c4', number: '04', title: 'Motion & Interaction', description: 'Purposeful micro-interactions and page transitions that reinforce what the interface is doing.', tags: ['anime.js', 'GSAP', 'Framer Motion'] },
     { id: 'c5', number: '05', title: 'System Design', description: 'Designs scalable systems that not only work for 100 users but also for 100 million users on cloud platform.', tags: ['Kafka', 'Docker', 'Kubernates'] },
-    { id: 'c6', number: '06', title: 'Competetive Programming', description: 'I compete in various competetive programming platforms and have a 4+ Star on Codeforces, while also being finalist at many hackathons.', tags: ['Hackathons', 'Competetive Programming'] },
+    { id: 'c6', number: '06', title: 'Competitive Programming', description: 'I compete in various competitive programming platforms and have a 4+ Star on Codeforces, while also being finalist at many hackathons.', tags: ['Hackathons', 'Competetive Programming'] },
   ],
   work: [
     {

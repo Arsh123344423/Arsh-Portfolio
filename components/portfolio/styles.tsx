@@ -26,6 +26,14 @@ export function PortfolioStyles(): JSX.Element {
         --line-on-stone: rgba(21, 19, 15, 0.85);
         --muted-on-ink: rgba(243, 236, 223, 0.58);
         --muted-on-stone: rgba(21, 19, 15, 0.56);
+
+        /* glass system tokens — the chat panel is the one place we let the
+           material get elaborate, everything else stays flat and quiet */
+        --glass-tint-top: rgba(32, 28, 23, 0.86);
+        --glass-tint-bottom: rgba(12, 11, 9, 0.9);
+        --glass-rim: rgba(227, 168, 116, 0.45);
+        --glass-rim-soft: rgba(243, 236, 223, 0.05);
+        --signal: #4ade80;
       }
 
       * { box-sizing: border-box; }
@@ -117,6 +125,30 @@ export function PortfolioStyles(): JSX.Element {
       }
       @media (max-width: 760px) { .pf-hero-spotlight { background: radial-gradient(420px circle at 50% 30%, rgba(227, 168, 116, 0.12), transparent 45%); } }
 
+      /* Ambient breathing glow — sits behind the orb/chat, gives the interactive
+         hero the same "alive" material feel as a voice-agent product without
+         adding any new UI chrome. Drop <div className="pf-ambient-glow" /> as
+         the first child inside .pf-hero-interactive (or .pf-hero-blend-stage)
+         to activate it. */
+      .pf-ambient-glow { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+      .pf-ambient-glow::before,
+      .pf-ambient-glow::after {
+        content: '';
+        position: absolute;
+        width: 44vw; height: 44vw;
+        max-width: 600px; max-height: 600px;
+        border-radius: 50%;
+        filter: blur(100px);
+        opacity: 0.2;
+        animation: pf-breathe 11s ease-in-out infinite;
+      }
+      .pf-ambient-glow::before { background: var(--ember); top: -12%; left: -10%; }
+      .pf-ambient-glow::after { background: var(--moss); bottom: -16%; right: -8%; animation-delay: -5.5s; }
+      @keyframes pf-breathe {
+        0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.16; }
+        50% { transform: scale(1.16) translate(3%, -2%); opacity: 0.27; }
+      }
+
       .pf-hero h1 { position: relative; z-index: 2; font-size: clamp(3rem, 8vw, 7.2rem); max-width: 17ch; color: var(--paper); }
       .pf-hero h1 .pf-line { display: block; overflow: hidden; }
       .pf-hero h1 .pf-line span { display: inline-block; transform: translateY(100%); opacity: 0; }
@@ -124,9 +156,50 @@ export function PortfolioStyles(): JSX.Element {
       .pf-hero-sub { position: relative; z-index: 2; margin-top: 30px; max-width: 46ch; font-size: 18px; line-height: 1.7; color: var(--muted-on-ink); opacity: 0; }
       .pf-hero-actions { position: relative; z-index: 2; display: flex; gap: 14px; margin-top: 42px; flex-wrap: wrap; opacity: 0; }
 
-      .pf-btn { font-size: 12px; letter-spacing: 0.06em; padding: 15px 28px; border-radius: 999px; transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
-      .pf-btn-solid { background: var(--ember); color: var(--ink); border: 1px solid var(--ember); }
-      .pf-btn-solid:hover { transform: translateY(-2px); }
+      .pf-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        padding: 15px 28px;
+        border-radius: 999px;
+        position: relative;
+        cursor: pointer;
+        text-decoration: none;
+        transition: transform 0.25s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+      .pf-btn-solid {
+        background: var(--ember);
+        color: var(--ink);
+        border: 1px solid var(--ember);
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+        z-index: 1;
+      }
+      .pf-btn-solid::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: var(--ink);
+        transform: translate(-50%, -50%);
+        transition: width 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+                    height 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+        z-index: -1;
+      }
+      .pf-btn-solid:hover {
+        color: var(--ember);
+        border-color: var(--ember);
+      }
+      .pf-btn-solid:hover::before {
+        width: 320px;
+        height: 320px;
+      }
       .pf-btn-ghost { border: 1px solid rgba(243, 236, 223, 0.18); color: var(--paper); background: rgba(243, 236, 223, 0.02); }
       .pf-btn-ghost:hover { border-color: rgba(227, 168, 116, 0.55); color: var(--ember); background: rgba(227, 168, 116, 0.06); }
 
@@ -434,24 +507,64 @@ export function PortfolioStyles(): JSX.Element {
         margin: 0 auto;
       }
 
+      /* ── glass chat panel ──
+         Signature material of the piece. Three coats: (1) a top-to-bottom
+         tinted blur so the panel reads as frosted rather than flat-dark,
+         (2) a hairline gradient rim built with mask-composite so light
+         appears to catch the top-left edge, (3) a near-invisible fractal
+         noise layer so the glass has grain instead of the slightly plasticky
+         look flat blurs get at large sizes. All three are inert to layout —
+         content underneath gets explicit z-index so it always paints above. */
       .pf-hero-glass-chat-container {
-        background: rgba(18, 16, 14, 0.76);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(243, 236, 223, 0.16);
-        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 24px rgba(227, 168, 116, 0.08);
-        border-radius: 20px;
+        position: relative;
+        isolation: isolate;
+        background:
+          radial-gradient(120% 60% at 14% 0%, rgba(255, 255, 255, 0.1), transparent 55%),
+          linear-gradient(165deg, var(--glass-tint-top), var(--glass-tint-bottom));
+        backdrop-filter: blur(28px) saturate(150%);
+        -webkit-backdrop-filter: blur(28px) saturate(150%);
+        border-radius: 22px;
         overflow: hidden;
         display: flex;
         flex-direction: column;
         height: clamp(360px, 48vh, 440px);
+        box-shadow:
+          0 30px 70px rgba(0, 0, 0, 0.55),
+          0 0 0 1px rgba(243, 236, 223, 0.07),
+          inset 0 1px 0 rgba(255, 255, 255, 0.14),
+          0 0 44px rgba(227, 168, 116, 0.1);
+      }
+      .pf-hero-glass-chat-container::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        padding: 1px;
+        border-radius: inherit;
+        background: linear-gradient(155deg, var(--glass-rim), var(--glass-rim-soft) 32%, var(--glass-rim-soft) 62%, var(--glass-rim));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+        z-index: 1;
+      }
+      .pf-hero-glass-chat-container::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        opacity: 0.05;
+        mix-blend-mode: overlay;
+        pointer-events: none;
+        z-index: 1;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
       }
 
       .pf-hero-chat-header {
+        position: relative;
+        z-index: 2;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 11px 16px;
+        padding: 12px 16px;
         background: rgba(255, 255, 255, 0.03);
         border-bottom: 1px solid rgba(243, 236, 223, 0.08);
       }
@@ -459,16 +572,41 @@ export function PortfolioStyles(): JSX.Element {
       .pf-hero-chat-status {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 11px;
       }
 
+      /* Equalizer-style listening indicator — reads as "live" the way a
+         voice-agent product does, rather than a single static dot */
+      .pf-waveform { display: flex; align-items: center; gap: 2.5px; height: 14px; }
+      .pf-waveform span {
+        width: 2.5px;
+        border-radius: 2px;
+        background: var(--signal);
+        box-shadow: 0 0 6px rgba(74, 222, 128, 0.55);
+        animation: pf-wave 1.15s ease-in-out infinite;
+        transform-origin: center;
+      }
+      .pf-waveform span:nth-child(1) { height: 40%; animation-delay: -0.9s; }
+      .pf-waveform span:nth-child(2) { height: 100%; animation-delay: -0.6s; }
+      .pf-waveform span:nth-child(3) { height: 65%; animation-delay: -0.3s; }
+      .pf-waveform span:nth-child(4) { height: 85%; animation-delay: 0s; }
+      @keyframes pf-wave {
+        0%, 100% { transform: scaleY(0.35); opacity: 0.65; }
+        50% { transform: scaleY(1); opacity: 1; }
+      }
+
+      /* legacy single-pip status marker — kept in case it's still used elsewhere */
       .pf-chat-status-pip {
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: #4ade80;
-        box-shadow: 0 0 10px #4ade80;
-        animation: pulse 2.5s infinite;
+        background: var(--signal);
+        box-shadow: 0 0 10px var(--signal);
+        animation: pf-pip-pulse 2.5s infinite;
+      }
+      @keyframes pf-pip-pulse {
+        0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--signal); }
+        50% { opacity: 0.55; box-shadow: 0 0 3px var(--signal); }
       }
 
       .pf-chat-status-text {
@@ -507,6 +645,8 @@ export function PortfolioStyles(): JSX.Element {
       }
 
       .pf-hero-chat-messages {
+        position: relative;
+        z-index: 2;
         flex: 1;
         overflow-y: auto;
         padding: 14px 16px;
@@ -519,6 +659,11 @@ export function PortfolioStyles(): JSX.Element {
       .pf-chat-msg-row {
         display: flex;
         width: 100%;
+        animation: pf-msg-in 0.4s cubic-bezier(.16, 1, .3, 1) both;
+      }
+      @keyframes pf-msg-in {
+        from { opacity: 0; transform: translateY(7px) scale(0.985); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
       }
 
       .pf-msg-user-row {
@@ -538,10 +683,11 @@ export function PortfolioStyles(): JSX.Element {
       }
 
       .pf-bubble-user {
-        background: linear-gradient(135deg, rgba(227, 168, 116, 0.3), rgba(227, 168, 116, 0.15));
-        border: 1px solid rgba(227, 168, 116, 0.45);
+        background: linear-gradient(135deg, rgba(227, 168, 116, 0.32), rgba(227, 168, 116, 0.15));
+        border: 1px solid rgba(227, 168, 116, 0.48);
         color: var(--paper);
         border-bottom-right-radius: 4px;
+        box-shadow: 0 6px 20px rgba(227, 168, 116, 0.15);
       }
 
       .pf-bubble-ai {
@@ -549,6 +695,7 @@ export function PortfolioStyles(): JSX.Element {
         border: 1px solid rgba(243, 236, 223, 0.1);
         color: var(--paper);
         border-bottom-left-radius: 4px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
       }
 
       .pf-bubble-loading {
@@ -593,6 +740,8 @@ export function PortfolioStyles(): JSX.Element {
       }
 
       .pf-chat-suggestions {
+        position: relative;
+        z-index: 2;
         display: flex;
         flex-wrap: wrap;
         gap: 6px;
@@ -614,12 +763,15 @@ export function PortfolioStyles(): JSX.Element {
         background: rgba(227, 168, 116, 0.2);
         border-color: var(--ember);
         color: var(--ember);
+        transform: translateY(-1px);
       }
 
       .pf-hero-chat-input-bar {
+        position: relative;
+        z-index: 2;
         display: flex;
         gap: 8px;
-        padding: 10px 14px;
+        padding: 11px 14px;
         background: rgba(0, 0, 0, 0.35);
         border-top: 1px solid rgba(243, 236, 223, 0.08);
       }
@@ -628,17 +780,19 @@ export function PortfolioStyles(): JSX.Element {
         flex: 1;
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(243, 236, 223, 0.12);
-        border-radius: 10px;
-        padding: 8px 12px;
+        border-radius: 999px;
+        padding: 9px 16px;
         color: var(--paper);
         font-size: 12.5px;
         outline: none;
-        transition: border-color 0.2s ease;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
       }
+
+      .pf-chat-input::placeholder { color: rgba(243, 236, 223, 0.4); }
 
       .pf-chat-input:focus {
         border-color: var(--ember);
-        box-shadow: 0 0 10px rgba(227, 168, 116, 0.25);
+        box-shadow: 0 0 0 3px rgba(227, 168, 116, 0.14), 0 0 14px rgba(227, 168, 116, 0.2);
       }
 
       .pf-chat-send-btn {
@@ -648,16 +802,16 @@ export function PortfolioStyles(): JSX.Element {
         background: var(--ember);
         color: var(--ink);
         border: none;
-        border-radius: 10px;
-        padding: 0 14px;
+        border-radius: 999px;
+        padding: 0 16px;
         font-size: 10.5px;
         font-weight: 600;
         cursor: pointer;
-        transition: transform 0.2s ease, opacity 0.2s ease;
+        transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
       }
 
       .pf-chat-send-btn:disabled {
-        opacity: 0.45;
+        opacity: 0.4;
         cursor: not-allowed;
       }
 
@@ -665,6 +819,7 @@ export function PortfolioStyles(): JSX.Element {
         transform: translateY(-1px);
         box-shadow: 0 4px 14px rgba(227, 168, 116, 0.4);
       }
+      .pf-chat-send-btn:not(:disabled):active { transform: translateY(0) scale(0.97); }
 
       /* ── Glassmorphic Loader Ball Animation ── */
       .pf-glass-loader-row {
@@ -784,6 +939,8 @@ export function PortfolioStyles(): JSX.Element {
         .pf-hero-sub { margin-top: 16px; font-size: 14.5px; line-height: 1.6; }
         .pf-hero-actions { margin-top: 26px; gap: 10px; }
         .pf-btn { padding: 12px 20px; font-size: 10.5px; }
+        .pf-btn-ghost { border: 1px solid rgba(243, 236, 223, 0.18); color: var(--paper); background: rgba(0, 0, 0, 1); }
+        .pf-btn-ghost:hover { border-color: rgba(255, 119, 0, 0.9); color: var(--ember); background: rgba(226, 226, 226, 1); }
 
         .pf-hero-glass-chat-container { height: 460px; border-radius: 20px; }
         .pf-hero-chat-header { padding: 14px 16px; }
