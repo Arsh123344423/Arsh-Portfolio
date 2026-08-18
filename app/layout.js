@@ -1,7 +1,7 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Arsh Portfolio',
+  title: "Arsh's Portfolio",
   description:
     'Modern interactive portfolio showcasing full-stack development, creative coding, and immersive 3D experiences.',
 };
