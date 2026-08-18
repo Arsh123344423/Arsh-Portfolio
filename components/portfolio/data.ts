@@ -111,9 +111,9 @@ export const DEFAULT_DATA: PortfolioData = {
     },
   ],
   stats: [
-    { id: 's1', value: '4', suffix: '+', label: 'Years Building', note: 'From first line of code to shipped, maintained products.' },
-    { id: 's2', value: '20', suffix: '+', label: 'Products Shipped', note: 'Across web, mobile, and embedded 3D contexts.' },
-    { id: 's3', value: '8', label: 'AI-Native Products', note: 'AI woven into the architecture, never bolted on after.' },
+    { id: 's1', value: '2', suffix: '+', label: 'Years Building', note: 'From first line of code to shipped, maintained products.' },
+    { id: 's2', value: '6', suffix: '+', label: 'Products Shipped', note: 'Across web, mobile, and embedded 3D contexts.' },
+    { id: 's3', value: '3', label: 'AI-Native Products', note: 'AI woven into the architecture, never bolted on after.' },
     { id: 's4', value: '100', suffix: '%', label: 'Design-to-Code Handoff', note: 'Every pixel and token accounted for in the build.' },
   ],
   socials: [
