@@ -15,8 +15,10 @@ export interface WorkItem {
   description: string;
   tags: string[];
   link?: string;
-  /** CSS gradient used for the placeholder thumbnail — swap for a real image later */
-  gradient: string;
+  /** Optional project screenshot or render image URL */
+  image?: string;
+  /** CSS gradient used when no image is provided or as thumbnail backdrop */
+  gradient?: string;
 }
 
 export interface Stat {

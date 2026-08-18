@@ -188,8 +188,8 @@ export function PortfolioStyles(): JSX.Element {
         border-radius: 50%;
         background: var(--ink);
         transform: translate(-50%, -50%);
-        transition: width 0.85s cubic-bezier(0.22, 1, 0.36, 1),
-                    height 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+        transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                    height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
         z-index: -1;
       }
       .pf-btn-solid:hover {
@@ -289,17 +289,20 @@ export function PortfolioStyles(): JSX.Element {
       /* ── work grid (ink chamber, big radius cards) ── */
       .pf-work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
       @media (max-width: 780px) { .pf-work-grid { grid-template-columns: 1fr; } }
-      .pf-work-card { border-radius: 48px; overflow: hidden; border: 2px solid rgba(243, 236, 223, 0.25); opacity: 0;}
+      .pf-work-card { border-radius: 48px; overflow: hidden; border: 2px solid rgba(243, 236, 223, 0.25); opacity: 0; display: flex; flex-direction: column; }
       .pf-work-thumb { height: 260px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 26px; }
       .pf-work-thumb::before { content: ''; position: absolute; inset: 0; transition: transform 0.7s cubic-bezier(.16,1,.3,1); }
       .pf-work-card:hover .pf-work-thumb::before { transform: scale(1.06); }
-      .pf-work-thumb-label { position: relative; z-index: 1; font-size: 11px; color: rgba(21, 19, 15, 0.7); font-family: 'JetBrains Mono'; text-transform: uppercase; }
-      .pf-work-info { padding: 26px 28px 28px; background: var(--ink-2); }
+      .pf-work-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: transform 0.7s cubic-bezier(.16,1,.3,1); }
+      .pf-work-card:hover .pf-work-img { transform: scale(1.06); }
+      .pf-work-thumb-label { position: relative; z-index: 1; font-size: 11px; color: rgba(21, 19, 15, 0.7); font-family: 'JetBrains Mono'; text-transform: uppercase; background: rgba(243, 236, 223, 0.85); padding: 4px 10px; border-radius: 999px; backdrop-filter: blur(8px); }
+      .pf-work-info { padding: 26px 28px 28px; background: var(--ink-2); display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
       .pf-work-info-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
       .pf-work-info h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 20px; margin: 0; }
       .pf-work-info-head span { font-size: 11px; color: var(--muted-on-ink); font-family: 'JetBrains Mono'; flex-shrink: 0; }
-      .pf-work-desc { margin: 12px 0 18px; font-size: 14px; line-height: 1.65; color: var(--muted-on-ink); }
-      .pf-work-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+      .pf-work-desc { margin: 12px 0 18px; font-size: 14px; line-height: 1.65; color: var(--muted-on-ink); display: flex; flex-direction: column; gap: 6px; }
+      .pf-work-desc-line { display: block; }
+      .pf-work-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: auto; }
       .pf-work-tags { display: flex; gap: 8px; flex-wrap: wrap; }
       .pf-work-tags span { font-size: 10px; letter-spacing: 0.06em; color: var(--muted-on-ink); border: 1px solid rgba(243, 236, 223, 0.25); border-radius: 999px; padding: 4px 10px; }
       .pf-work-link { font-size: 11px; color: var(--ember); transition: opacity 0.25s ease; }

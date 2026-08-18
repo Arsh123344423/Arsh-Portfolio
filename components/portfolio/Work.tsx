@@ -12,41 +12,89 @@ interface WorkProps {
 
 export function Work({ work, registerReveal }: WorkProps): JSX.Element {
   return (
-    <section className="pf-section-ink" id="work">
+    <section className="pf-section-ink" id="work" aria-label="Selected Developer Projects and Architecture">
       <div className="wrap">
         <div className="pf-section-head">
           <div>
             <span className="pf-section-eyebrow mono">Selected work</span>
-            <h2 className="pf-section-title serif">A few recent builds</h2>
+            <h2 className="pf-section-title serif">Production builds & systems</h2>
           </div>
-          <p className="pf-section-note">Thumbnails are gradient placeholders — swap in real screenshots or renders when you have them.</p>
+          <p className="pf-section-note">
+            High-throughput backends, agentic AI pipelines, and distributed architectures.
+          </p>
         </div>
 
-        <div className="pf-work-grid">
+        <div className="pf-work-grid" role="list">
           {work.map((w) => (
-            <div className="pf-work-card" key={w.id} ref={registerReveal}>
-              <div className="pf-work-thumb" style={{ background: w.gradient }}>
-                <span className="pf-work-thumb-label">Case Study</span>
+            <article
+              className="pf-work-card"
+              key={w.id}
+              ref={registerReveal}
+              role="listitem"
+              itemScope
+              itemType="https://schema.org/SoftwareSourceCode"
+            >
+              <div
+                className="pf-work-thumb"
+                style={{
+                  background: w.gradient || 'linear-gradient(135deg, #182822, #5eead4 150%)',
+                }}
+              >
+                {w.image ? (
+                  <a
+                    href={w.link || '#'}
+                    target={w.link?.startsWith('http') ? '_blank' : undefined}
+                    rel={w.link?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    aria-label={`View ${w.title} project`}
+                  >
+                    <img
+                      src={w.image}
+                      alt={`${w.title} — ${w.tags.join(', ')}`}
+                      className="pf-work-img"
+                      loading="lazy"
+                      itemProp="image"
+                    />
+                  </a>
+                ) : null}
+                <span className="pf-work-thumb-label">{w.image ? 'Preview' : 'Case Study'}</span>
               </div>
               <div className="pf-work-info">
                 <div className="pf-work-info-head">
-                  <h3>{w.title}</h3>
-                  <span className="mono">{w.year}</span>
+                  <h3 itemProp="name">{w.title}</h3>
+                  <span className="mono" itemProp="dateCreated">{w.year}</span>
                 </div>
-                <p className="pf-work-desc">{w.description}</p>
+                <div className="pf-work-desc" itemProp="description">
+                  {w.description.split('\n').map((line, idx) => (
+                    <span key={idx} className="pf-work-desc-line">{line}</span>
+                  ))}
+                </div>
                 <div className="pf-work-foot">
-                  <div className="pf-work-tags">
-                    {w.tags.map((t) => <span key={t} className="mono">{t}</span>)}
+                  <div className="pf-work-tags" aria-label="Technologies used">
+                    {w.tags.map((t) => (
+                      <span key={t} className="mono" itemProp="programmingLanguage">
+                        {t}
+                      </span>
+                    ))}
                   </div>
                   {w.link && (
-                    <a href={w.link} className="pf-work-link mono">View project →</a>
+                    <a
+                      href={w.link}
+                      className="pf-work-link mono"
+                      target={w.link.startsWith('http') ? '_blank' : undefined}
+                      rel={w.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      title={`View ${w.title} repository`}
+                      itemProp="codeRepository"
+                    >
+                      View project →
+                    </a>
                   )}
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>
     </section>
   );
 }
+

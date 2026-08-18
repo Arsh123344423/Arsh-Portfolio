@@ -14,16 +14,17 @@ const INITIAL_MESSAGES: Message[] = [
   {
     id: 'm1',
     sender: 'ai',
-    text: "Hello! I'm **Arsh's AI Assistant**. Ask me anything about his full-stack builds, AI-native projects, 3D/WebGL experiences, or background.",
+    text: "Hello! I'm **Arsh's AI Assistant**. Ask me anything strictly about his verified resume — including his **projects (SkillCAD EV, SwiftTrans, Git)**, **internship at SyinQ**, **skills**, **education at Bennett University**, and **competitive programming**.",
     time: 'Just now',
   },
 ];
 
 const SUGGESTIONS = [
   '✦ Tell me about Arsh',
-  '✦ Top AI & 3D Projects',
-  '✦ Core Tech Stack',
-  '✦ How can I hire or contact him?',
+  '✦ SkillCAD EV & SwiftTrans',
+  '✦ SyinQ Internship',
+  '✦ Skills & LeetCode (550+)',
+  '✦ Education & Research',
 ];
 
 function formatMarkdown(text: string): JSX.Element {
@@ -137,7 +138,7 @@ export function HeroChat(): JSX.Element {
       const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
         sender: 'ai',
-        text: "I couldn't reach the server right now. Feel free to explore the sections below or reach out at **arxh.dev3@gmail.com**!",
+        text: "I couldn't reach the server right now. Feel free to explore the sections below or reach out at **arshsrivastava00@gmail.com**!",
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, errorMsg]);
@@ -161,11 +162,7 @@ export function HeroChat(): JSX.Element {
       {/* Top Glass Bar */}
       <div className="pf-hero-chat-header">
         <div className="pf-hero-chat-status">
-          <ListeningIndicator />
-          <div className="pf-chat-status-text">
-            <span className="mono pf-chat-title">ARSH.AI // ASSISTANT</span>
-            <span className="pf-chat-subtitle">Neural Portfolio Agent</span>
-          </div>
+          <GlassLoadingBall label="Arsh's AI Assistant" classNameText="mono pf-chat-title" colorFrom='#26f635' colorTo='#26f635' />
         </div>
 
         <button
