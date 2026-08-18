@@ -32,8 +32,8 @@ export const DEFAULT_DATA: PortfolioData = {
     ],
     facts: [
       { label: 'Based in', value: 'India, working globally' },
-      { label: 'Stack', value: 'TypeScript, Next.js, Python, Three.js' },
-      { label: 'Open to', value: 'Freelance & collaborations' },
+      { label: 'Internship', value: 'React Native Developer - SyinQ' },
+      { label: 'Open to', value: 'Freelance, collaborations & full-time roles' },
     ],
     currently: 'I am the product that needs to be sold on this website. Explore more to know me better.',
     initials: 'AS',
