@@ -28,7 +28,7 @@ export const DEFAULT_DATA: PortfolioData = {
   about: {
     paragraphs: [
       "I'm Arsh Srivastava, currently a final year B.Tech student. I'm a full-stack software developer who builds products where AI isn't a bolted-on feature, it's part of the architecture from day one. Most of my work sits at the intersection of a fast, well-engineered backend and an interface that feels considered rather than assembled.",
-      "I am also a national level team sports player which proves I am not only a team player but also someone who takes casre of his health. I love to interact with people and learn as many new skills as possible."
+      "I am also a national level team sports player which proves I am not only a team player but also someone who takes cares of his health. I love to interact with people and learn as many new skills as possible."
     ],
     facts: [
       { label: 'Based in', value: 'India, working globally' },
@@ -46,7 +46,7 @@ export const DEFAULT_DATA: PortfolioData = {
     { id: 'c3', number: '03', title: '3D & WebGL', description: 'Interactive Three.js scenes and product visualizations, optimized to actually run well on real devices.', tags: ['Three.js', 'R3F', 'elevenlabs'] },
     { id: 'c4', number: '04', title: 'Motion & Interaction', description: 'Purposeful micro-interactions and page transitions that reinforce what the interface is doing.', tags: ['anime.js', 'GSAP', 'Framer Motion'] },
     { id: 'c5', number: '05', title: 'System Design', description: 'Designs scalable systems that not only work for 100 users but also for 100 million users on cloud platform.', tags: ['Kafka', 'Docker', 'Kubernates'] },
-    { id: 'c6', number: '06', title: 'Competitive Programming', description: 'I compete in various competitive programming platforms and have a 4+ Star on Codeforces, while also being finalist at many hackathons.', tags: ['Hackathons', 'Competetive Programming'] },
+    { id: 'c6', number: '06', title: 'Competitive Programming', description: 'I compete in various competitive programming platforms and have a 4+ Star on Codeforces, while also being finalist at many hackathons.', tags: ['Java', 'Python', 'Js/Ts'] },
   ],
   work: [
     {
