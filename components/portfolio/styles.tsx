@@ -404,6 +404,24 @@ export function PortfolioStyles(): JSX.Element {
         box-sizing: border-box;
       }
 
+      .pf-hero-shader-canvas {
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        min-width: 0;
+        min-height: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .pf-hero-shader-canvas canvas {
+        display: block;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
       .pf-hero-interactive h1,
       .pf-hero-title-diff {
         font-size: clamp(1.95rem, 3.1vw, 3.1rem) !important;
@@ -910,9 +928,9 @@ export function PortfolioStyles(): JSX.Element {
       /* ══════════ MOBILE COMPACTION ══════════ */
       @media (max-width: 960px) {
         .pf-hero-interactive {
-          min-height: auto;
-          height: auto;
-          max-height: none;
+          min-height: 100dvh;
+          height: 100dvh;
+          max-height: 100dvh;
           padding: 100px 0 40px;
         }
         .pf-hero-content-wrap {
@@ -937,7 +955,12 @@ export function PortfolioStyles(): JSX.Element {
         .pf-nav-cta { padding: 8px 14px; font-size: 10px; }
 
         .pf-hero { padding: 96px 0 48px; min-height: auto; }
-        .pf-hero-interactive { min-height: auto; padding: 100px 0 40px; }
+        .pf-hero-interactive {
+          min-height: 100dvh;
+          height: 100dvh;
+          max-height: 100dvh;
+          padding: 100px 0 40px;
+        }
         .pf-hero h1 { font-size: clamp(2.15rem, 10.5vw, 3rem); margin-top: 18px; max-width: 13ch; }
         .pf-hero-sub { margin-top: 16px; font-size: 14.5px; line-height: 1.6; }
         .pf-hero-actions { margin-top: 26px; gap: 10px; }

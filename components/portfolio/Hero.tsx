@@ -1,7 +1,7 @@
 'use client';
 
+import { ShaderGradientCanvas, ShaderGradient } from '@shadergradient/react'
 import type { JSX, RefObject, MutableRefObject } from 'react';
-import { OrbBackground } from './OrbBackground';
 import { HeroChat } from './HeroChat';
 
 /* ────────────────────────── Hero ────────────────────────── */
@@ -41,7 +41,32 @@ export function Hero({
   return (
     <section id="hero" className="pf-hero pf-hero-interactive" onMouseMove={onMouseMove}>
       {/* 3D Organic Orb Canvas in Background */}
-      <OrbBackground />
+      <ShaderGradientCanvas
+        className="pf-hero-shader-canvas"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 0,
+        }}
+        pixelDensity={1}
+        fov={45}
+        preserveDrawingBuffer={false}
+        powerPreference="high-performance"
+      >
+        <ShaderGradient
+          type="waterPlane"
+          cDistance={3.6}
+          cPolarAngle={90}
+          cameraZoom={3}
+          enableCameraUpdate={false}
+          zoomOut={false}
+          positionX={0}
+          positionY={0.9}
+          positionZ={-0.3}
+        />
+      </ShaderGradientCanvas>
 
       {/* Grid overlay & subtle cursor spotlight */}
       <div className="pf-hero-grid" aria-hidden />
