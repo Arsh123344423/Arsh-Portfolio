@@ -576,7 +576,6 @@ export function PortfolioStyles(): JSX.Element {
   position: relative;
   padding: 12px 14px;
   border-top: 1px solid rgba(255, 255, 255, 0.14);
-  background: linear-gradient(to top, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
 }
 
 .pf-chat-demo-input-main {

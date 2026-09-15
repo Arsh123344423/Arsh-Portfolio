@@ -227,7 +227,6 @@ return (
     )}
 
     {/* Glass Input Bar */}
-    <div className="pf-hero-chat-input-bar">
       <form className="pf-chat-demo-input-main" onSubmit={handleSubmit}>
         <input
           ref={inputRef}
@@ -247,7 +246,6 @@ return (
           <ArrowUpIcon />
         </button>
       </form>
-    </div>
 
     {/* Hidden SVG distortion filter, used by backdrop-filter below */}
     <svg className="pf-glass-defs" aria-hidden="true">
