@@ -1,0 +1,32 @@
+/* ── nav ── */
+.pf-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 32px;
+  background: rgba(21, 19, 15, 0.7);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(243, 236, 223, 0.14);
+  transition: background 0.3s ease;
+}
+.pf-nav.scrolled { background: rgba(21, 19, 15, 0.92); }
+.pf-mark { display: flex; align-items: center; gap: 10px; font-family: 'Fraunces', serif; font-weight: 500; font-size: 17px; color: var(--paper); }
+.pf-mark .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ember); }
+.pf-links { display: flex; align-items: center; gap: 34px; }
+.pf-links a { font-size: 11px; color: var(--muted-on-ink); transition: color 0.25s ease; }
+.pf-links a:hover { color: var(--paper); }
+.pf-nav-cta {
+  font-size: 11px; padding: 10px 20px; border-radius: 999px;
+  border: 2px solid rgba(243, 236, 223, 0.3); color: var(--paper);
+  transition: all 0.25s ease;
+}
+.pf-nav-cta:hover { background: var(--ember); border-color: var(--ember); color: var(--ink); }
+
+@media (max-width: 860px) {
+  .pf-links { display: none; }
+}
+
+@media (max-width: 640px) {
+  .pf-nav { padding: 14px 18px; }
+  .pf-mark { font-size: 15px; }
+  .pf-nav-cta { padding: 8px 14px; font-size: 10px; }
+}

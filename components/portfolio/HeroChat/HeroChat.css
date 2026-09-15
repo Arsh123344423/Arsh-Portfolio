@@ -1,0 +1,536 @@
+/* ── Glass Hero Chatbot ── */
+.pf-glass-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.pf-hero-chat-wrapper {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ===== Outer hero panel ===== */
+.pf-hero-chat-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(500px, 100%);
+  max-width: min(500px, calc(100vw - 32px));
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: none;
+  transition: border-radius 0.4s ease, height 0.4s ease;
+  isolation: isolate;
+  padding: 0;
+  gap: 0;
+}
+
+.pf-chat-collapsed {
+  width: min(500px, 100%);
+  padding: 0;
+  height: auto;
+  min-height: 0;
+  border-radius: 999px;
+}
+
+.pf-chat-expanded {
+  width: min(500px, 100%);
+  padding: 0;
+  min-height: 360px;
+  height: clamp(360px, 48vh, 440px);
+  border-radius: 28px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+@supports (backdrop-filter: url(#a)) {
+  .pf-hero-chat-container {
+    backdrop-filter: blur(20px) saturate(160%) url(#pf-liquid-distortion);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+  }
+}
+
+/* soft top-left specular highlight, like light hitting curved glass */
+.pf-hero-chat-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.04) 35%,
+    rgba(255, 255, 255, 0) 55%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  pointer-events: none;
+}
+
+/* ===== Header bar ===== */
+.pf-hero-chat-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.pf-hero-chat-status {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.pf-chat-status-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.pf-chat-title {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--paper);
+  font-weight: 600;
+}
+
+.pf-chat-reset-btn {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(243, 236, 223, 0.14);
+  color: var(--muted-on-ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pf-chat-reset-btn:hover {
+  background: rgba(227, 168, 116, 0.15);
+  color: var(--ember);
+  border-color: var(--ember);
+}
+
+/* ===== Message Feed ===== */
+.pf-hero-chat-messages {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scrollbar-width: none;
+}
+
+.pf-chat-msg-row {
+  display: flex;
+  width: 100%;
+  animation: pf-msg-in 0.4s cubic-bezier(.16, 1, .3, 1) both;
+}
+@keyframes pf-msg-in {
+  from { opacity: 0; transform: translateY(7px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.pf-msg-user-row {
+  justify-content: flex-end;
+}
+
+.pf-msg-ai-row {
+  justify-content: flex-start;
+}
+
+/* ===== Message bubbles ===== */
+.pf-chat-bubble {
+  max-width: 90%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 13px;
+  line-height: 1.5;
+  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+  border: 1px solid rgba(255,255,255,0.09);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    inset 0 -8px 18px rgba(255,255,255,0.04),
+    0 10px 26px rgba(0,0,0,0.12);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+.pf-bubble-user {
+  background: linear-gradient(135deg, rgba(227, 168, 116, 0.28), rgba(255,255,255,0.06));
+  border-color: rgba(227, 168, 116, 0.42);
+  color: var(--paper);
+  border-bottom-right-radius: 6px;
+  box-shadow: 0 14px 28px rgba(227, 168, 116, 0.12), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+.pf-bubble-ai {
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  border-color: rgba(255,255,255,0.1);
+  color: var(--paper);
+  border-bottom-left-radius: 6px;
+}
+
+.pf-bubble-loading {
+  background: linear-gradient(180deg, rgba(227, 168, 116, 0.12), rgba(255,255,255,0.04));
+  border: 1px solid rgba(227, 168, 116, 0.35);
+}
+
+.pf-chat-time {
+  display: block;
+  font-size: 9.5px;
+  opacity: 0.8;
+  margin-top: 4px;
+  text-align: right;
+}
+
+.pf-chat-md strong {
+  color: var(--ember);
+  font-weight: 600;
+}
+
+.pf-chat-link {
+  color: var(--ember);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pf-chat-bullet-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 3px 0;
+}
+
+.pf-chat-bullet-dot {
+  color: var(--ember);
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.pf-chat-space {
+  height: 4px;
+}
+
+/* ===== Suggestions ===== */
+.pf-chat-suggestions {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 16px 8px;
+}
+
+.pf-chat-chip {
+  font-size: 10px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--paper);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 8px 22px rgba(0,0,0,0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.pf-chat-chip:hover {
+  background: linear-gradient(180deg, rgba(227, 168, 116, 0.18), rgba(255,255,255,0.04));
+  border-color: rgba(227, 168, 116, 0.5);
+  color: var(--ember);
+  transform: translateY(-1px);
+}
+
+/* ===== Input bar ===== */
+.pf-hero-chat-input-bar {
+  position: relative;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
+}
+
+.pf-chat-demo-input-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 6px 6px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.pf-chat-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+}
+.pf-chat-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.pf-chat-send-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease;
+}
+
+.pf-hero-chat-container .pf-chat-send-btn {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 36px;
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
+  background: #f3ecdf;
+  color: #15130f;
+  border: 1px solid rgba(21, 19, 15, 0.35);
+  box-shadow: none;
+}
+
+.pf-hero-chat-container .pf-chat-send-btn svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  color: #15130f;
+}
+
+.pf-hero-chat-container .pf-chat-send-btn svg path {
+  stroke: #15130f;
+}
+
+.pf-chat-send-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.24);
+  transform: scale(1.06);
+}
+.pf-chat-send-btn:active:not(:disabled) {
+  transform: scale(0.9);
+}
+.pf-chat-send-btn:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+/* ===== Demo Shell Surface ===== */
+.pf-chat-demo-shell {
+  width: min(500px, 100%);
+  min-height: 360px;
+  height: clamp(360px, 48vh, 440px);
+  border-radius: 20px;
+  background: #f9f3f3;
+  box-shadow: inset 0 0 0 1px rgba(44, 47, 54, 0.52), inset 0 0 50px rgba(255, 255, 255, 0.02);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.pf-chat-demo-shell.pf-chat-collapsed {
+  min-height: 0;
+  height: auto;
+}
+
+.pf-chat-demo-shell.pf-chat-expanded {
+  animation: pf-chat-expand 0.35s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+@keyframes pf-chat-expand {
+  from { opacity: 0.82; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pf-chat-demo-shell .pf-hero-chat-header {
+  background: transparent;
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.pf-chat-demo-shell .pf-hero-chat-messages {
+  padding: 12px 14px;
+}
+
+.pf-chat-demo-shell .pf-chat-bubble {
+  font-size: 12px;
+}
+
+.pf-chat-demo-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px 13px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 18px 36px rgba(0,0,0,0.18);
+}
+
+.pf-chat-demo-at-icon,
+.pf-chat-demo-control,
+.pf-chat-demo-send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  border-radius: 36px;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.pf-chat-demo-at-icon {
+  width: 28px;
+  align-self: flex-start;
+}
+
+.pf-chat-demo-input .pf-chat-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+  font-size: 15px;
+}
+
+.pf-chat-demo-input .pf-chat-input:focus {
+  border: 0;
+  box-shadow: none;
+}
+
+.pf-chat-demo-input .pf-chat-input::placeholder {
+  color: rgba(234, 236, 241, 0.58);
+}
+
+.pf-chat-demo-input .pf-chat-input:focus-visible {
+  outline: 2px solid rgba(227, 168, 116, 0.7);
+  outline-offset: 2px;
+}
+
+.pf-chat-demo-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pf-chat-demo-control {
+  gap: 4px;
+  padding: 0 8px;
+  border: 0;
+  color: #caccd2;
+  font-size: 12px;
+  line-height: 14px;
+  cursor: pointer;
+}
+
+.pf-chat-demo-control svg { transform: rotate(90deg); }
+
+.pf-chat-demo-send {
+  width: 28px;
+  flex: 0 0 28px;
+  padding: 0;
+  border: 0;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.pf-chat-demo-send:not(:disabled):hover {
+  background: rgba(227, 168, 116, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(227, 168, 116, 0.45);
+}
+
+/* Container theme & color variables */
+.pf-hero-chat-container,
+.pf-hero-chat-container * {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.pf-hero-chat-container .pf-chat-input::placeholder {
+  color: rgba(0, 0, 0, 0.58);
+}
+
+.pf-hero-chat-container .pf-chat-time {
+  opacity: 0.8;
+}
+
+.pf-chat-expanded::before {
+  background: none;
+}
+
+.pf-chat-expanded,
+.pf-chat-expanded * {
+  color: var(--paper);
+}
+
+.pf-chat-expanded .pf-chat-link,
+.pf-chat-expanded .pf-chat-md strong,
+.pf-chat-expanded .pf-chat-bullet-dot {
+  color: var(--ember);
+}
+
+.pf-chat-expanded .pf-chat-input::placeholder {
+  color: rgba(243, 236, 223, 0.7);
+}
+
+/* ══════════ HERO CHAT RESPONSIVE ══════════ */
+@media (max-width: 960px) {
+  .pf-hero-chat-wrapper {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .pf-chat-demo-shell {
+    width: calc(100% - 24px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .pf-chat-demo-input {
+    margin: 0 4px;
+    padding: 13px 14px 14px;
+  }
+
+  .pf-chat-demo-input .pf-chat-input {
+    min-height: 40px;
+    font-size: 14px;
+  }
+
+  .pf-hero-glass-chat-container {
+    height: 460px;
+    border-radius: 20px;
+  }
+
+  .pf-hero-chat-container {
+    width: calc(100% - 32px);
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .pf-hero-chat-header { padding: 14px 16px; }
+  .pf-hero-chat-messages { padding: 14px 16px; }
+  .pf-chat-bubble { max-width: 94%; font-size: 12.5px; }
+}

@@ -1,0 +1,49 @@
+/* ── CTA (ink chamber) ── */
+.pf-cta {
+  text-align: center;
+  padding: 100px 0;
+}
+
+.pf-cta h2 {
+  font-size: clamp(2.4rem, 7vw, 5.4rem);
+  max-width: 16ch;
+  margin: 0 auto;
+}
+
+.pf-cta p {
+  margin: 28px auto 0;
+  max-width: 40ch;
+  color: var(--muted-on-ink);
+  font-size: 16px;
+}
+
+.pf-cta-email {
+  display: inline-block;
+  margin-top: 46px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(15px, 2.4vw, 20px);
+  border-bottom: 2px solid var(--ember);
+  padding-bottom: 6px;
+  color: var(--paper);
+  transition: color 0.25s ease;
+}
+
+.pf-cta-email:hover {
+  color: var(--ember);
+}
+
+@media (max-width: 640px) {
+  .pf-cta {
+    padding: 68px 0;
+  }
+  .pf-cta h2 {
+    font-size: clamp(1.8rem, 9vw, 2.6rem);
+  }
+  .pf-cta p {
+    margin-top: 16px;
+    font-size: 14px;
+  }
+  .pf-cta-email {
+    margin-top: 26px;
+  }
+}

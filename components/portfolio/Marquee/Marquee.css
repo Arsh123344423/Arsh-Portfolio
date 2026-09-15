@@ -1,0 +1,40 @@
+/* ── marquee (stone chamber) ── */
+.pf-marquee-section {
+  background: var(--stone);
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  padding: 28px 0;
+  overflow: hidden;
+}
+
+.pf-marquee-track {
+  display: flex;
+  gap: 60px;
+  width: max-content;
+  animation: pf-scroll-x 28s linear infinite;
+}
+
+.pf-marquee-track span {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--muted-on-stone);
+  white-space: nowrap;
+}
+
+@keyframes pf-scroll-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (max-width: 640px) {
+  .pf-marquee-section {
+    padding: 14px 0;
+  }
+  .pf-marquee-track {
+    gap: 30px;
+  }
+  .pf-marquee-track span {
+    font-size: 15px;
+  }
+}

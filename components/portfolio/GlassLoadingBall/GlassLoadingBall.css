@@ -1,0 +1,66 @@
+/* ── Glassmorphic Loader Ball Animation ── */
+.pf-glass-loader-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.pf-glass-orb-loader {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pf-glass-orb-core {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255, 236, 210, 0.95), rgba(227, 168, 116, 0.7) 40%, rgba(47, 74, 62, 0.4) 80%, rgba(21, 19, 15, 0.8) 100%);
+  box-shadow: 0 0 12px rgba(227, 168, 116, 0.6), inset 0 0 4px rgba(255, 255, 255, 0.8);
+  animation: orb-morph 2.4s ease-in-out infinite alternate;
+}
+
+.pf-glass-orb-glow {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(227, 168, 116, 0.5) 0%, transparent 70%);
+  animation: orb-glow-pulse 2s ease-in-out infinite;
+}
+
+.pf-glass-loader-label {
+  font-size: 11px;
+  color: var(--ember);
+  letter-spacing: 0.08em;
+}
+
+@keyframes orb-morph {
+  0% {
+    transform: scale(0.92) rotate(0deg);
+    border-radius: 46% 54% 50% 50% / 52% 48% 52% 48%;
+  }
+  50% {
+    transform: scale(1.08) rotate(180deg);
+    border-radius: 54% 46% 52% 48% / 46% 54% 46% 54%;
+  }
+  100% {
+    transform: scale(0.96) rotate(360deg);
+    border-radius: 48% 52% 46% 54% / 54% 46% 50% 50%;
+  }
+}
+
+@keyframes orb-glow-pulse {
+  0%, 100% {
+    transform: scale(0.9);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 0.85;
+  }
+}

@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useRef, useEffect, type JSX, type FormEvent } from 'react';
-import { GlassLoadingBall } from './GlassLoadingBall';
+import { GlassLoadingBall } from '../GlassLoadingBall';
+import './HeroChat.css';
 
 interface Message {
   id: string;
@@ -157,106 +158,104 @@ export function HeroChat(): JSX.Element {
     setInput('');
   };
 
-// No import of liquid-glass-react needed anymore
+  return (
+    <div className={`pf-hero-chat-container ${expanded ? 'pf-chat-expanded' : 'pf-chat-collapsed'}`}>
+      {/* Top Glass Bar */}
+      {expanded && (
+        <div className="pf-hero-chat-header">
+          <div className="pf-hero-chat-status">
+            <GlassLoadingBall label="Arsh's AI Assistant" classNameText="mono pf-chat-title" colorFrom='#26f635' colorTo='#26f635' />
+          </div>
 
-return (
-  <div className={`pf-hero-chat-container ${expanded ? 'pf-chat-expanded' : 'pf-chat-collapsed'}`}>
-    {/* Top Glass Bar */}
-    {expanded && (
-      <div className="pf-hero-chat-header">
-        <div className="pf-hero-chat-status">
-          <GlassLoadingBall label="Arsh's AI Assistant" classNameText="mono pf-chat-title" colorFrom='#26f635' colorTo='#26f635' />
+          <button
+            type="button"
+            onClick={handleClear}
+            className="mono pf-chat-reset-btn"
+            title="Reset conversation"
+          >
+            CLEAR
+          </button>
         </div>
+      )}
 
-        <button
-          type="button"
-          onClick={handleClear}
-          className="mono pf-chat-reset-btn"
-          title="Reset conversation"
-        >
-          CLEAR
-        </button>
-      </div>
-    )}
-
-    {/* Messages Feed */}
-    {expanded && (
-      <>
-        <div className="pf-hero-chat-messages" aria-live="polite" aria-relevant="additions">
-          {messages.map((m) => (
-            <div
-              key={m.id}
-              className={`pf-chat-msg-row ${m.sender === 'user' ? 'pf-msg-user-row' : 'pf-msg-ai-row'}`}
-            >
-              <div className={`pf-chat-bubble ${m.sender === 'user' ? 'pf-bubble-user' : 'pf-bubble-ai'}`}>
-                <div className="pf-chat-bubble-content">
-                  {formatMarkdown(m.text)}
+      {/* Messages Feed */}
+      {expanded && (
+        <>
+          <div className="pf-hero-chat-messages" aria-live="polite" aria-relevant="additions">
+            {messages.map((m) => (
+              <div
+                key={m.id}
+                className={`pf-chat-msg-row ${m.sender === 'user' ? 'pf-msg-user-row' : 'pf-msg-ai-row'}`}
+              >
+                <div className={`pf-chat-bubble ${m.sender === 'user' ? 'pf-bubble-user' : 'pf-bubble-ai'}`}>
+                  <div className="pf-chat-bubble-content">
+                    {formatMarkdown(m.text)}
+                  </div>
+                  <span className="mono pf-chat-time">{m.time}</span>
                 </div>
-                <span className="mono pf-chat-time">{m.time}</span>
               </div>
-            </div>
-          ))}
+            ))}
 
-          {loading && (
-            <div className="pf-chat-msg-row pf-msg-ai-row">
-              <div className="pf-chat-bubble pf-bubble-ai pf-bubble-loading">
-                <GlassLoadingBall label="Synthesizing response..." />
+            {loading && (
+              <div className="pf-chat-msg-row pf-msg-ai-row">
+                <div className="pf-chat-bubble pf-bubble-ai pf-bubble-loading">
+                  <GlassLoadingBall label="Synthesizing response..." />
+                </div>
               </div>
+            )}
+
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Starter Suggestions */}
+          {messages.length <= 2 && !loading && (
+            <div className="pf-chat-suggestions">
+              {SUGGESTIONS.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  className="mono pf-chat-chip"
+                  onClick={() => sendMessage(s.replace(/^✦\s*/, ''))}
+                >
+                  {s}
+                </button>
+              ))}
             </div>
           )}
+        </>
+      )}
 
-          <div ref={messagesEndRef} />
-        </div>
+      {/* Glass Input Bar */}
+      <div className="pf-hero-chat-input-bar">
+        <form className="pf-chat-demo-input-main" onSubmit={handleSubmit}>
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask about Arsh's work..."
+            className="pf-chat-input"
+            disabled={loading}
+          />
+          <button
+            type="submit"
+            disabled={!input.trim() || loading}
+            className="pf-chat-send-btn"
+            aria-label="Send message"
+          >
+            <ArrowUpIcon />
+          </button>
+        </form>
+      </div>
 
-        {/* Starter Suggestions */}
-        {messages.length <= 2 && !loading && (
-          <div className="pf-chat-suggestions">
-            {SUGGESTIONS.map((s) => (
-              <button
-                key={s}
-                type="button"
-                className="mono pf-chat-chip"
-                onClick={() => sendMessage(s.replace(/^✦\s*/, ''))}
-              >
-                {s}
-              </button>
-            ))}
-          </div>
-        )}
-      </>
-    )}
-
-    {/* Glass Input Bar */}
-    <div className="pf-hero-chat-input-bar">
-      <form className="pf-chat-demo-input-main" onSubmit={handleSubmit}>
-        <input
-          ref={inputRef}
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask about Arsh's work..."
-          className="pf-chat-input"
-          disabled={loading}
-        />
-        <button
-          type="submit"
-          disabled={!input.trim() || loading}
-          className="pf-chat-send-btn"
-          aria-label="Send message"
-        >
-          <ArrowUpIcon />
-        </button>
-      </form>
+      {/* Hidden SVG distortion filter, used by backdrop-filter below */}
+      <svg className="pf-glass-defs" aria-hidden="true">
+        <filter id="pf-liquid-distortion">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="7" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="2" result="soft" />
+          <feDisplacementMap in="SourceGraphic" in2="soft" scale="18" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
     </div>
-
-    {/* Hidden SVG distortion filter, used by backdrop-filter below */}
-    <svg className="pf-glass-defs" aria-hidden="true">
-      <filter id="pf-liquid-distortion">
-        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="7" result="noise" />
-        <feGaussianBlur in="noise" stdDeviation="2" result="soft" />
-        <feDisplacementMap in="SourceGraphic" in2="soft" scale="18" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-    </svg>
-  </div>
-);
+  );
 }

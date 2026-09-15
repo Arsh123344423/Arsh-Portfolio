@@ -1,12 +1,13 @@
 'use client';
 
-import { ShaderGradientCanvas, ShaderGradient } from '@shadergradient/react'
+import { ShaderGradientCanvas, ShaderGradient } from '@shadergradient/react';
 import type { JSX, RefObject, MutableRefObject } from 'react';
-import { HeroChat } from './HeroChat';
+import { HeroChat } from '../HeroChat';
+import './Hero.css';
 
 /* ────────────────────────── Hero ────────────────────────── */
 
-interface HeroProps {
+export interface HeroProps {
   heroLines: string[];
   heroSub: string;
   location: string;
@@ -95,7 +96,6 @@ export function Hero({
       </div>
       {/* Scroll metadata cue at bottom */}
       <div className="pf-hero-meta mono">
-        
         <div className="pf-scroll-cue" style={{ textAlign: 'right' }}>{location}</div>
       </div>
     </section>

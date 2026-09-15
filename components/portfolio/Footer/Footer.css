@@ -1,0 +1,37 @@
+/* ── footer (stone chamber) ── */
+.pf-footer {
+  background: var(--stone);
+  color: var(--ink);
+  padding: 34px 0;
+}
+
+.pf-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 11px;
+}
+
+.pf-footer-links {
+  display: flex;
+  gap: 26px;
+}
+
+.pf-footer-links a:hover {
+  color: var(--moss);
+}
+
+@media (max-width: 640px) {
+  .pf-footer {
+    padding: 22px 0;
+  }
+  .pf-footer-row {
+    font-size: 10px;
+    gap: 10px;
+  }
+  .pf-footer-links {
+    gap: 16px;
+  }
+}

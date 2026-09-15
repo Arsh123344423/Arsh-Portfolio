@@ -1,0 +1,86 @@
+/* ── capabilities deck ── */
+.pf-deck {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.pf-deck-card {
+  background: var(--stone-2);
+  border: 2px solid var(--ink);
+  border-radius: 28px;
+  padding: 34px 28px;
+  opacity: 0;
+  transition: background 0.3s ease;
+}
+
+.pf-deck-card:hover {
+  background: #fff;
+}
+
+.pf-deck-num {
+  font-size: 12px;
+  color: var(--muted-on-stone);
+}
+
+.pf-deck-card h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 22px;
+  margin: 20px 0 12px;
+}
+
+.pf-deck-card p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--muted-on-stone);
+  margin: 0 0 18px;
+}
+
+.pf-deck-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pf-deck-tags span {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--moss);
+  border: 1px solid var(--moss);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-family: 'JetBrains Mono';
+  text-transform: uppercase;
+}
+
+/* ══════════ CAPABILITIES RESPONSIVE ══════════ */
+@media (max-width: 900px) {
+  .pf-deck {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .pf-deck {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .pf-deck {
+    gap: 12px;
+  }
+  .pf-deck-card {
+    padding: 22px 20px;
+    border-radius: 20px;
+  }
+  .pf-deck-card h3 {
+    font-size: 17px;
+    margin: 14px 0 8px;
+  }
+  .pf-deck-card p {
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+}

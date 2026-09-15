@@ -1,0 +1,98 @@
+/* ── Glass Action Button ── */
+.pf-chat-launch-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 160px;
+  padding: 18px 16px 8px;
+}
+
+.pf-glass-action-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--glass-btn-size);
+  width: var(--glass-btn-size);
+  height: var(--glass-btn-size);
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--glass-btn-radius);
+  background:
+    radial-gradient(120% 150% at 20% 0%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04) 38%, rgba(255, 255, 255, 0.02) 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+  color: var(--paper);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -10px 18px rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+  cursor: pointer;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  overflow: hidden;
+}
+
+.pf-glass-action-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-color: rgba(227, 168, 116, 0.6);
+  box-shadow:
+    0 22px 48px rgba(0, 0, 0, 0.42),
+    0 0 18px rgba(227, 168, 116, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.pf-glass-action-btn:active {
+  transform: translateY(0) scale(0.985);
+}
+
+.pf-glass-action-btn--pill {
+  width: min(260px, 78vw);
+  min-width: min(260px, 78vw);
+  height: 64px;
+  padding: 0 26px;
+  border-radius: 999px;
+}
+
+.pf-glass-action-btn--rounded {
+  border-radius: 22px;
+}
+
+.pf-glass-action-btn--circle {
+  border-radius: 50%;
+}
+
+.pf-glass-action-btn__shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.24), transparent 38%, rgba(255, 255, 255, 0.1) 52%, transparent 78%);
+  pointer-events: none;
+}
+
+.pf-glass-action-btn__content {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.pf-glass-action-btn__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.pf-glass-action-btn__label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.96);
+}
