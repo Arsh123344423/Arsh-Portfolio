@@ -189,6 +189,14 @@
   mix-blend-mode: difference;
 }
 
+@media (max-width: 960px) {
+  .pf-hero-interactive {
+    min-height: 100svh;
+    height: 100svh;
+    max-height: 100svh;
+  }
+}
+
 .pf-hero-interactive h1 em,
 .pf-hero-title-diff em {
   font-style: normal;
