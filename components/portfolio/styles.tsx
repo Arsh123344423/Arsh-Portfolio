@@ -482,7 +482,7 @@ export function PortfolioStyles(): JSX.Element {
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   border: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow: none;
-  transition: border-radius 0.4s ease, height 0.4s ease;
+  transition: border-radius 0.4s ease;
 }
 
 .pf-chat-collapsed {
@@ -1321,9 +1321,9 @@ export function PortfolioStyles(): JSX.Element {
       /* ══════════ MOBILE COMPACTION ══════════ */
       @media (max-width: 960px) {
         .pf-hero-interactive {
-          min-height: 100dvh;
-          height: 100dvh;
-          max-height: 100dvh;
+          min-height: 100svh;
+          height: 100svh;
+          max-height: 100svh;
           padding: 100px 0 40px;
         }
         .pf-hero-content-wrap {
@@ -1349,9 +1349,9 @@ export function PortfolioStyles(): JSX.Element {
 
         .pf-hero { padding: 96px 0 48px; min-height: auto; }
         .pf-hero-interactive {
-          min-height: 100dvh;
-          height: 100dvh;
-          max-height: 100dvh;
+          min-height: 100svh;
+          height: 100svh;
+          max-height: 100svh;
           padding: 100px 0 40px;
         }
         .pf-hero h1 { font-size: clamp(2.15rem, 10.5vw, 3rem); margin-top: 18px; max-width: 13ch; }
