@@ -407,8 +407,18 @@ export function PortfolioStyles(): JSX.Element {
         width: 100% !important;
         height: 100% !important;
       }
+      .pf-welcome-text{
+          color: #ffffff; /* White */
 
-      .pf-hero-interactive h1,
+      }
+      .pf-hero-title{
+        color: #351704;
+      }
+      .pf-hero-interactive h1{
+        font-size: clamp(1.95rem, 3.1vw, 3.1rem) !important;
+        line-height: 1.05;
+        max-width: 14ch;
+      }
       .pf-hero-title-diff {
         font-size: clamp(1.95rem, 3.1vw, 3.1rem) !important;
         line-height: 1.05;
@@ -416,10 +426,14 @@ export function PortfolioStyles(): JSX.Element {
         mix-blend-mode: difference;
       }
 
-      .pf-hero-interactive h1 em,
+      .pf-hero-interactive h1 em{
+        font-style: normal;
+        color: inherit !important;
+      }
       .pf-hero-title-diff em {
         font-style: normal;
         color: inherit !important;
+        mix-blend-mode: difference;
       }
 
       .pf-hero-interactive .pf-hero-sub,
@@ -477,7 +491,7 @@ export function PortfolioStyles(): JSX.Element {
   max-width: min(500px, calc(100vw - 32px));
   overflow: hidden;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.26);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   border: 1px solid rgba(255, 255, 255, 0.22);
@@ -499,7 +513,7 @@ export function PortfolioStyles(): JSX.Element {
   min-height: 360px;
   height: clamp(360px, 48vh, 440px);
   border-radius: 28px;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.35);
 }
 
 @supports (backdrop-filter: url(#a)) {
@@ -656,11 +670,9 @@ export function PortfolioStyles(): JSX.Element {
 
       .pf-hero-welcome-wrap .pf-hero-chat-wrapper {
         margin-top: 28px;
+        justify-items: center;
       }
 
-      .pf-hero-title-diff {
-        mix-blend-mode: difference;
-      }
 
       .pf-hero-header-block {
         position: relative;
@@ -686,7 +698,7 @@ export function PortfolioStyles(): JSX.Element {
         z-index: 4;
         width: 100%;
         max-width: 500px;
-        margin: 0 auto;
+        margin: auto;
       }
 
       .pf-hero-chat-container {
@@ -1312,6 +1324,16 @@ export function PortfolioStyles(): JSX.Element {
         justify-content: space-between;
         z-index: 4;
       }
+
+      /* Keep the hero geometry stable while mobile browser chrome expands or collapses. */
+      .pf-hero-interactive {
+        position: relative;
+        min-height: 100svh;
+        height: 100svh;
+        max-height: 100svh;
+        flex: 0 0 100svh;
+      }
+
       @media (max-height: 720px) {
         .pf-hero-interactive .pf-hero-meta {
           display: none;
@@ -1321,9 +1343,6 @@ export function PortfolioStyles(): JSX.Element {
       /* ══════════ MOBILE COMPACTION ══════════ */
       @media (max-width: 960px) {
         .pf-hero-interactive {
-          min-height: 100svh;
-          height: 100svh;
-          max-height: 100svh;
           padding: 100px 0 40px;
         }
         .pf-hero-content-wrap {
@@ -1349,9 +1368,6 @@ export function PortfolioStyles(): JSX.Element {
 
         .pf-hero { padding: 96px 0 48px; min-height: auto; }
         .pf-hero-interactive {
-          min-height: 100svh;
-          height: 100svh;
-          max-height: 100svh;
           padding: 100px 0 40px;
         }
         .pf-hero h1 { font-size: clamp(2.15rem, 10.5vw, 3rem); margin-top: 18px; max-width: 13ch; }

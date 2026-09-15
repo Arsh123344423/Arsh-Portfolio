@@ -65,6 +65,7 @@ export function Hero({
           positionX={0}
           positionY={0.9}
           positionZ={-0.3}
+          color1="#c37044"
         />
       </ShaderGradientCanvas>
 
@@ -87,7 +88,8 @@ export function Hero({
 
       <div className="wrap pf-hero-content-wrap pf-hero-welcome-wrap">
         <h1 className="serif pf-hero-welcome">
-          WELCOME TO THE PORTFOLIO OF <span className="pf-hero-title-diff">ARSH</span>
+          <span className="pf-welcome-text">WELCOME TO THE PORTFOLIO OF</span>{" "}
+          <span className="pf-hero-title">ARSH</span>
         </h1>
         <div className="pf-hero-chat-wrapper">
           <HeroChat />

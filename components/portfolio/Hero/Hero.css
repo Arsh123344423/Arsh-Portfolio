@@ -189,11 +189,16 @@
   mix-blend-mode: difference;
 }
 
+.pf-hero-interactive {
+  min-height: 100svh;
+  height: 100svh;
+  max-height: 100svh;
+  flex: 0 0 100svh;
+}
+
 @media (max-width: 960px) {
   .pf-hero-interactive {
-    min-height: 100svh;
-    height: 100svh;
-    max-height: 100svh;
+    padding: 100px 0 40px;
   }
 }
 

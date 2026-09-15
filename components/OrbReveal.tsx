@@ -189,12 +189,12 @@ export default function OrbReveal({
         halo.material.opacity = Math.max(0, 0.14 * (1.0 - currentScroll * 2));
 
         // Background color of container blends from black to sphere's cream (#f3ecdf)
-        if (currentScroll > 0.4) {
-          const bgP = Math.min(1, (currentScroll - 0.4) / 0.5);
-          container.style.backgroundColor = `rgb(${Math.round(243 * bgP)}, ${Math.round(236 * bgP)}, ${Math.round(223 * bgP)})`;
-        } else {
-          container.style.backgroundColor = '#000000';
-        }
+        // if (currentScroll > 0.4) {
+        //   const bgP = Math.min(1, (currentScroll - 0.4) / 0.5);
+        //   container.style.backgroundColor = `rgb(${Math.round(243 * bgP)}, ${Math.round(236 * bgP)}, ${Math.round(223 * bgP)})`;
+        // } else {
+        //   container.style.backgroundColor = '#000000';
+        // }
 
         // Fade cue out early
         if (cue) {
@@ -205,7 +205,7 @@ export default function OrbReveal({
 
         // Trigger slide-up once the sphere reaches 75% expansion —
         // don't wait for the background color transition to finish
-        if (currentScroll >= 0.75 && !isSliding) {
+        if (currentScroll >= 0.15 && !isSliding) {
           triggerSlideUp();
         }
 
